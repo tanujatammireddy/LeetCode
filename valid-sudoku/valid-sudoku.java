@@ -9,12 +9,10 @@ class Solution {
         
         for(int i=0;i< 9;i++){
            for(int j=0;j< 9;j++){
-              // System.out.println("grid valid "+is_gridValid(board,memo_grid,i,j));
             if(!is_gridValid(board,memo_grid,i,j) || !is_rowValid(board,i,memo_row,cols) || !is_colValid(board,j,memo_col,rows))
              return false;
         }
         }
-       
         return true;
     }
     

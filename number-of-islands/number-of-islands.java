@@ -1,31 +1,28 @@
 class Solution {
     public int numIslands(char[][] grid) {
-        int rows = grid.length;
-        int columns = grid[0].length;
-        int n=0,m=0;
+        int rows = grid.length-1;
+        int cols = grid[0].length-1;
         int count=0;
-        for(int i=0;i<rows;i++){
-            for(int j=0;j<columns;j++){
-                if(grid[i][j]=='1'){
-                   island(grid,i,j,rows,columns);  
+         
+        for(int i=0;i<=rows;i++){
+            for(int j=0;j<=cols;j++){
+                if(grid[i][j] == '1'){
                     count++;
+                    checkIsland(grid,rows,cols,i,j);
                 }
             }
         }
-        
         return count;
-    }
-     public void island(char[][]grid, int i,int j,int rows,int columns){
-         
-         if(grid[i][j]=='1'){
-             grid[i][j]='0';
-             int[][] directions = new int[][]{{1,0},{0,1},{-1,0},{0,-1}}; 
-             for(int[] dir:directions){
-                 int x= i+dir[0];
-                 int y =j+ dir[1];
-                 if(x>=0 && x<rows && y>=0 && y<columns)
-                   island(grid,x,y,rows,columns);  
-             }
-         }
      }
+    public void checkIsland(char[][] grid,int rows,int cols,int i,int j){
+        int[][] directions={{1,0},{-1,0},{0,-1},{0,1}};
+        for(int[] dir:directions){
+            int row = i + dir[0];
+            int col = j + dir[1];
+            if(row>=0 && row<= rows && col>=0 && col<= cols && grid[row][col]=='1'){
+                grid[row][col]='0';
+                checkIsland(grid,rows,cols,row,col);
+            }
+        }
+    }
 }

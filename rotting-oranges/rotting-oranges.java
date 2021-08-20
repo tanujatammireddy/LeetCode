@@ -1,52 +1,62 @@
 class Solution {
-    public int count=-1;
-    public  int freshOranges = 0;
+    
+    public int time = -1;
+    public int freshOranges = 0;
     public int orangesRotting(int[][] grid) {
-        int row = grid.length, col = grid[0].length;
-        int[][] directions ={{0,1},{1,0},{0,-1},{-1,0}};
         
-        List<Pair<Integer,Integer>> list = new ArrayList();
-        for(int i=0;i< row ;i++){
-            for(int j=0;j< col;j++){
-                if(grid[i][j]== 2){
-                    list.add(new Pair(i,j));
+        Queue<Pair<Integer,Integer>> queue = new LinkedList<>();
+        boolean[][] visited  = new boolean[grid.length][grid[0].length];
+        
+        
+        for(int i=0;i< grid.length;i++){
+            for(int j=0; j<grid[0].length;j++){
+                if(grid[i][j] == 2){
+                    queue.add(new Pair(i,j));
+                    visited[i][j] = true; 
                 }
-                if(grid[i][j]== 1)
-                freshOranges++;
+                if(grid[i][j] == 1){
+                    this.freshOranges++;
+                }
+                
             }
         }
-        if(list.size()==0 && freshOranges == 0) return 0;
-        if(list.size()==0 && freshOranges != 0) return -1;
-        orangesRotten(grid,list,row,col,directions);
-        if(freshOranges == 0) 
-        return count;
-        else
-            return -1;
-    }
-    public void orangesRotten(int[][] grid, List<Pair<Integer,Integer>> list,int row, int col, int[][] directions){
+        queue.add(new Pair(-1,-1));
+        bfs(queue,grid,visited);
         
+        time = this.freshOranges == 0 ? time : -1 ;
+        return time;
         
-       // System.out.println(""+list);
-        if(!list.isEmpty()) {
-            count++;
-            List<Pair<Integer,Integer>> newlist = new ArrayList();
-            for(Pair p:list){
-                int x =(int) p.getKey();
-                int y =(int) p.getValue();
-                for(int[] dir: directions){
-                    int new_x = x + dir[0];
-                    int new_y = y + dir[1];
-                    if(new_x >= 0 && new_x < row && new_y >= 0 && new_y < col && grid[new_x][new_y]==1){
-                        grid[new_x][new_y] =2;
-                        newlist.add(new Pair(new_x,new_y));
-                        freshOranges--;
-                    }
-                    
-                }
-            }
-            if(!newlist.isEmpty() )
-           orangesRotten(grid,newlist,row,col,directions); 
-        }
     }
     
+    public void bfs(Queue<Pair<Integer,Integer>> queue, int[][] grid,boolean[][] visited){
+        
+        int[][] directions = new int[][]{{0,1},{1,0},{0,-1},{-1,0}};
+        while(!queue.isEmpty()){
+            
+         Pair<Integer,Integer> p = queue.poll();
+            int x = p.getKey();
+            int y = p.getValue();
+            //System.out.println("x: "+x+" y: "+y);
+            if(x == -1){
+                this.time++;
+                if (!queue.isEmpty())
+                    queue.add(new Pair(-1,-1));
+            }
+            else{
+                boolean flag = false;
+                for(int[] dir: directions){
+                int X = x + dir[0];
+                int Y = y + dir[1];
+                if(X >= 0 && X < grid.length && Y >= 0 && Y < grid[0].length && grid[X][Y] == 1 && visited[X][Y] == false ){
+                    queue.add(new Pair(X,Y));
+                    visited[X][Y] = true; 
+                    grid[X][Y] = 2; 
+                    this.freshOranges--;
+                }
+            }
+            
+        }
+        
+    }
+}
 }

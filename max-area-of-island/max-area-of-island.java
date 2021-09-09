@@ -1,30 +1,31 @@
 class Solution {
-    
+    public int maxArea = 0;
     public int maxAreaOfIsland(int[][] grid) {
-    int[][] directions ={{0,1},{1,0},{0,-1},{-1,0}};
-    int row = grid.length, col = grid[0].length;
-    int maxArea = 0;
-        for(int i=0;i<row;i++){
-          for(int j=0;j<col;j++){
-            
-             if(grid[i][j] == 1){
-             int area =  calculateArea(grid,directions,1,i,j,row,col) ;
-             if(area > maxArea ) maxArea = area;
+        int area = 0;
+        for(int i=0; i< grid.length;i++){
+            for(int j=0; j< grid[0].length;j++){
+            area = 0;
+            if(grid[i][j]== 1){
+                area = areaOfIsland(grid,i,j,1);
+                maxArea = (area > maxArea)? area :maxArea;
             }
-        }  
+        }
         }
         return maxArea;
     }
-    
-    public int calculateArea(int[][] grid,int[][] directions,int currentArea, int x, int y, int row, int col){
+    public int areaOfIsland(int[][] grid, int x, int y, int area){
+        //System.out.println("area"+area);
         grid[x][y] = 0;
-        for(int[] dir:directions ){
-            int X = dir[0] + x;
-            int Y = dir[1] + y;
-            if(X>=0 && X< row && Y>=0 && Y<col && grid[X][Y]== 1){
-               currentArea = calculateArea(grid,directions,currentArea+1,X,Y,row,col) ;
-            }
+        int[][] directions ={{0,1},{1,0},{0,-1},{-1,0}};
+        
+        for(int[] dir: directions){
+            
+            int X = x+ dir[0];
+            int Y = y+ dir[1];
+            if(X >= 0 && X < grid.length && Y >= 0 && Y < grid[0].length && grid[X][Y] == 1)
+                area = areaOfIsland(grid,X,Y,area+1);
+            
         }
-        return currentArea;
+        return area;
     }
 }

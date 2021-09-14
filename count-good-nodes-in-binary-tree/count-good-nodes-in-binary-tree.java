@@ -14,24 +14,22 @@
  * }
  */
 class Solution {
-    public int count =0;
+    public int count = 0;
     public int goodNodes(TreeNode root) {
-        int max = Integer.MIN_VALUE;
-        if(root != null){
-            traversal(root,max);
-        }
+        if(root != null)
+            dfs(root,Integer.MIN_VALUE);
+        
         return count;
+            
     }
-    public void traversal(TreeNode root,int max){
-        if(root.val >= max){
-            this.count++;
-        }
-        if(root.left != null){
-            traversal(root.left,Math.max(root.val,max));
-        }
-        if(root.right != null){
-            traversal(root.right,Math.max(root.val,max));
-        }
-    
+    public void dfs(TreeNode root, int max) {
+        if( root.val >= max )
+            count++;
+        max = Math.max(root.val,max);
+        if(root.left != null)
+            dfs(root.left,max);
+        if(root.right!=null)
+            dfs(root.right,max);
+        
     }
 }

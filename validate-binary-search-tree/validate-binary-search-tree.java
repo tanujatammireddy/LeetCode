@@ -14,29 +14,17 @@
  * }
  */
 class Solution {
-
     public boolean isValidBST(TreeNode root) {
-        if(root != null)
-            return bfs(root,null,null);
-        else
+     return valid(root,null,null);
+    }
+    public boolean valid(TreeNode root, Integer lowerlimit,Integer upperlimit){
+        if(root == null)
             return true;
+        
+        if ((lowerlimit != null && root.val<= lowerlimit) || (upperlimit != null && root.val >= upperlimit))
+            return false;
+        
+        return valid(root.left,lowerlimit,root.val) && valid(root.right,root.val,upperlimit);
     }
     
-    public boolean bfs(TreeNode root, Integer lowerLimit, Integer upperLimit){
-        
-    boolean leftTree = true;
-    boolean rightTree = true;
-    
-    if ((lowerLimit != null && root.val <= lowerLimit) || (upperLimit != null && root.val >= upperLimit))
-        return false;
-            
-    if(root.left != null)
-       leftTree = bfs(root.left,lowerLimit,root.val);
-        
-    if(root.right != null)
-        rightTree = bfs(root.right,root.val,upperLimit);
-        
-        return (rightTree && leftTree);
-        
-    }
 }

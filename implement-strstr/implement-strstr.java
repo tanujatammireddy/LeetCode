@@ -1,30 +1,35 @@
 class Solution {
     public int strStr(String haystack, String needle) {
-        if(needle.length()==0 && haystack.length()==0 ) return 0;
-        if(needle.length()==0 && haystack.length() !=0 ) return 0;
-        if(needle.length()!=0 && haystack.length()==0 ) return -1;
-        char[] haystackArray = haystack.toCharArray();
+        
+        if(haystack.equals(needle)) return 0;
+        int needle_len = needle.length();
+        if(needle_len == 0 && haystack.length() !=0) return 0;
+        if(needle_len > haystack.length()) return -1;
+        
         char[] needleArray = needle.toCharArray();
-        int j =0;
-        int index=-1;
-        int count=0;
-        if(needle.length() <= haystack.length()){
-            for(int i=0;i<haystack.length();i++){
-               // System.out.println("i: "+i+" j: "+j);
-                
-                if(count == needle.length() ) break;
-                else
-                {
-                j=0;index=-1;count=0; 
-                while( i+count <haystack.length() && j<needleArray.length && haystackArray[i+count]== needleArray[j] ){
-                    if(index== -1) index= i;
-                    j++;
-                    count++;
-                }
-                }
+        char[] haystackArray = haystack.toCharArray();
+        char start = needleArray[0];
+        char end = needleArray[needle_len-1];
+        
+        for(int i=0;i<haystackArray.length - needle_len+1 ;i++){
+            if(haystackArray[i] == start && haystackArray[i+needle_len-1]== end){
+                int pos = subString(needleArray,haystackArray,i);
+                if( pos != -1)
+                    return pos;
             }
         }
-        if(count == needle.length() ) return index;
-        else return -1;
+        return -1;
+    }
+    
+    public int subString(char[] needleArray, char[] haystackArray, int pointer ){
+        int i= 0, index = pointer;
+        while(index < haystackArray.length && i< needleArray.length && haystackArray[index] == needleArray[i] ){
+            index++;
+            i++;
+        }
+        if(i== needleArray.length)
+            return pointer;
+        else
+            return -1;
     }
 }

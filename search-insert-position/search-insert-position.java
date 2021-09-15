@@ -1,17 +1,18 @@
 class Solution {
     public int searchInsert(int[] nums, int target) {
-        int start =0, end = nums.length-1,current;
-        while(start <= end){
-            current = start +(end-start)/2;
-            //System.out.println("start: "+start+" end: "+end+" current: "+current);
-            if(nums[current]== target)
-                return current;
-            if(nums[current] < target ) 
-                start = current+1;
+        int low = 0, high = nums.length-1;
+        int mid;
+        while(low <= high){
+            mid = low + (high-low)/2;
+            if(nums[mid] == target)
+                return mid;
+            else if(nums[mid] < target)
+                low = mid+1;
             else
-                end = current-1;
+                high = mid-1;
+            
         }
-        
-        return start;
+        System.out.println("low"+low+" high: "+high);
+        return low;
     }
 }

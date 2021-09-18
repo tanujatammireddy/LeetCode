@@ -3,15 +3,18 @@ class Solution {
         
         int n = nums.length;
         if(n == 1) return nums[0];
-        Integer[] dp = new Integer[n+1];
-        return Math.max(fill(nums,dp,n-1),fill(nums,dp,n-2));
+        return Math.max(fill(nums,0,n-1),fill(nums,0,n-2));
     }
-    public int fill(int[] nums,Integer[] dp,int n){
-        if(n < 0) return -1;
-        if(n == 0) return nums[0];
-        if(n == 1) return nums[1];
-        if(dp[n] != null ) return dp[n];
-        dp[n] = Math.max( fill(nums,dp,n-2),  fill(nums,dp,n-3) ) + nums[n];
-        return dp[n];
+    public int fill(int[] nums,int start,int n){
+        int house_1 = 0;
+        int house_2 = 0;
+        int max = -1;
+        for(int i= start ;i<=n;i++){
+            max = Math.max( house_1+nums[i],house_2); 
+            house_1 = house_2;
+            house_2 = max;
+        }
+        return max;
+        
     } 
 }

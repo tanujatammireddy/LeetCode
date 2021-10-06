@@ -1,41 +1,32 @@
 class Solution {
-    
-    public int emptyRoom = 2147483647;
-    public int obstacle = -1;
-    public int gate = 0;
-    
-    public int[][] directions = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
-    Queue<Pair<Integer,Integer>> queue = new LinkedList();
-    
     public void wallsAndGates(int[][] rooms) {
-        
-            for(int i=0; i<rooms.length; i++){
-              for(int j=0; j<rooms[0].length; j++){
-                if(rooms[i][j] == 0){
-                   queue.add(new Pair(i,j)); 
-                }
-            }
-            }
-            if(!queue.isEmpty())
-            bfs(queue,rooms);
-    }
-    
-    public void bfs(Queue<Pair<Integer,Integer>> queue,int[][] rooms){
-        
-        while(!queue.isEmpty()){
-            Pair p = queue.poll();
-            int x = (int)p.getKey();
-            int y = (int)p.getValue();
-            
-            for(int[] dir: directions){
-                int X = x + dir[0];
-                int Y = y + dir[1];
-                
-                if(X>=0 && X< rooms.length && Y>=0 && Y<rooms[0].length && rooms[X][Y] == emptyRoom){
-                   rooms[X][Y] = rooms[x][y] + 1; 
-                   queue.add(new Pair(X,Y)); 
-                }
+    if(rooms == null || rooms.length == 0 || rooms[0].length == 0)
+        return;
+           
+    for(int i = 0; i < rooms.length; i++) {
+        for(int j = 0; j < rooms[0].length; j++) {
+            if(rooms[i][j] == 0){
+                int dis = 0;
+                helper(rooms, i, j, dis);
             }
         }
     }
+    
+    return;
+}
+public void helper(int[][] rooms, int i, int j, int dis) {
+    int[] X = {0, 1, 0, -1};
+    int[] Y = {1, 0, -1, 0};
+    
+    
+    for(int k = 0; k < 4; k++) {
+        if(inBounds(rooms, i + X[k], j + Y[k]) && dis + 1 < rooms[i + X[k]][j + Y[k]]) {
+            rooms[i + X[k]][j + Y[k]] = dis + 1;
+            helper(rooms, i + X[k], j + Y[k], dis + 1);
+        }                               
+    }
+}
+public boolean inBounds(int[][] rooms, int x, int y) {
+    return x >= 0 && x < rooms.length && y >= 0 && y < rooms[0].length;
+}
 }

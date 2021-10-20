@@ -10,21 +10,18 @@
  */
 class Solution {
     public ListNode reverseList(ListNode head) {
+        //a->b->c  
+        // a<-b<-c
+        ListNode current = head;
+        ListNode previous = null;
         
-        List<Integer> listValues = new ArrayList();
-        ListNode result = head;
-        ListNode temp = head;
+        while(current!=null){
+            ListNode next = current.next;
+            current.next = previous;
+            previous = current;
+            current = next;
+        }
         
-        while(temp!=null){
-            listValues.add(temp.val);
-            temp = temp.next;
-        }
-        int i = listValues.size()-1;
-        while(result!=null){
-            result.val = listValues.get(i);
-            i--;
-            result = result.next;
-        }
-        return head;
+        return previous;
     }
 }

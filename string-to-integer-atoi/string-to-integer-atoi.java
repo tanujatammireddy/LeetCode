@@ -11,40 +11,20 @@ class Solution {
             i++;
         }
         
-        StringBuilder Sb = new StringBuilder();
+        long num = 0;
         while( i < s.length() && Character.isDigit(s.charAt(i))){
-            Sb.append(s.charAt(i));
+            num = num *10 + Character.getNumericValue(s.charAt(i));
+            if(num*sign <= Integer.MIN_VALUE)
+                    return Integer.MIN_VALUE;
+            if(num*sign >= Integer.MAX_VALUE)
+                return Integer.MAX_VALUE;
             i++;
         }
-        if(Sb.length() > 0){ 
-            
-        int index = 0; 
-        while(index < Sb.length() && Sb.charAt(index) == '0')
-              index++;
-        Sb.replace(0, index, "");
-            
         
-        if(Sb.length() > 10){
-            if(sign == -1)
-                return Integer.MIN_VALUE;
-            else
-                return Integer.MAX_VALUE;
-        }
-            
-        if(Sb.length() > 0){      
-        Long number = Long.parseLong(Sb.toString());
-        if(sign == -1){
-                if(number*-1 <= Integer.MIN_VALUE)
-                    return Integer.MIN_VALUE;
-                return Integer.parseInt(Sb.toString())*-1;
-        }
-        else{
-            if(number >= Integer.MAX_VALUE)
-                return Integer.MAX_VALUE;
-            return Integer.parseInt(Sb.toString());
-        }
-        }
-        }
-        return 0; 
+        if(sign == -1)
+                return (int)num*-1;
+        else
+            return (int)num;
+         
     }
 }

@@ -14,38 +14,15 @@
  * }
  */
 class Solution {
-    TreeNode result = new TreeNode();
     public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
         
-        if(root1 == null && root2 != null )
-             return root2;
-        if(root1 != null && root2 == null )
-             return root1;
-        if(root1 != null && root2 != null )
-            return inorderTraversal(root1,root2);
-        return null;
-    }
-    public TreeNode inorderTraversal(TreeNode root1, TreeNode root2) {
+        if(root1 == null ) return root2;
+        if(root2 == null ) return root1;
         
-        TreeNode current = new TreeNode();
+        root1.val += root2.val;
+        root1.left = mergeTrees(root1.left,root2.left);
+        root1.right = mergeTrees(root1.right,root2.right);
         
-        if(root1 != null && root2 != null )
-            current.val = root1.val + root2.val;
-        
-        if(root1.left != null && root2.left != null)
-            current.left = inorderTraversal(root1.left,root2.left);
-        else if(root1.left == null && root2.left != null)
-            current.left = root2.left;
-        else if(root1.left != null && root2.left == null)
-            current.left = root1.left;
-        
-        if(root1.right != null && root2.right != null)
-            current.right = inorderTraversal(root1.right,root2.right);
-        else if(root1.right == null && root2.right != null)
-            current.right = root2.right;
-        else if(root1.right != null && root2.right == null)
-            current.right = root1.right;
-        
-        return current;
+        return root1;
     }
 }

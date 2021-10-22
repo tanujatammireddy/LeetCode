@@ -6,8 +6,10 @@ public class ListNode{
     }
 }
 class MyLinkedList {
+    
     int size ;
     ListNode head;
+    
     public MyLinkedList() {
         head = new ListNode(-1);
         size = 0;

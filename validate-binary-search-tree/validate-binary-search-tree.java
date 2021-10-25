@@ -14,17 +14,23 @@
  * }
  */
 class Solution {
-    public boolean isValidBST(TreeNode root) {
-     return valid(root,null,null);
-    }
-    public boolean valid(TreeNode root, Integer lowerlimit,Integer upperlimit){
-        if(root == null)
-            return true;
-        
-        if ((lowerlimit != null && root.val<= lowerlimit) || (upperlimit != null && root.val >= upperlimit))
-            return false;
-        
-        return valid(root.left,lowerlimit,root.val) && valid(root.right,root.val,upperlimit);
-    }
     
+    
+    public boolean isValidBST(TreeNode root) {
+        
+      return isValid(root,null, null) ;
+        
+    }
+    public boolean isValid(TreeNode root,Integer lowerLimit, Integer upperLimit){
+        
+        if(root == null) return true; 
+    
+        int value = root.val;
+        
+        if((lowerLimit != null && value <= lowerLimit) || (upperLimit != null && value >= upperLimit ))
+            return false;
+            
+        return isValid(root.left,lowerLimit,value) && isValid(root.right,value,upperLimit);
+        
+    }
 }

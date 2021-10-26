@@ -17,11 +17,11 @@ class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> returnList = new ArrayList();
         returnList = bfs(root);
-        for(int i=0;i< returnList.size();i++ ){
-            if(i%2 == 1){
+        int i= 1;
+        while(i< returnList.size()){
                 List<Integer> list = returnList.get(i);
                 Collections.reverse(list);
-            }
+                i = i+2;
         }
         return returnList;
     }

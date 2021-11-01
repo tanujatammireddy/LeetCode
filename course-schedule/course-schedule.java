@@ -1,51 +1,45 @@
 class Solution {
-    
-    public Map<Integer,List<Integer>> map;
+    public Map<Integer,List<Integer>> map ;
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-
+      
         map = new HashMap();
         
         for(int[] course:prerequisites){
-            
-            if(map.containsKey(course[0]))
-                map.get(course[0]).add(course[1]);
-            else{
-                List<Integer> list = new ArrayList();
-                list.add(course[1]);
-                map.put(course[0],list);
-            }
+            List<Integer> list = map.getOrDefault(course[0],new ArrayList());
+            list.add(course[1]);
+            map.put(course[0],list);
         }
-        
-        boolean[] courses = new boolean[numCourses];
         boolean[] checked = new boolean[numCourses];
-        for(int currentCourse: map.keySet() ){
-            if(isCyclic(currentCourse,numCourses,courses,checked))
+        boolean[] path = new boolean[numCourses];
+        for(int current_course:map.keySet()){
+            if(isCyclic(current_course,checked,path))
                 return false;
         }
         
-        
         return true;
-        
     }
-    public boolean isCyclic(int currentCourse, int numCourses,boolean[] courses,boolean[] checked){
+    
+    public boolean isCyclic (int current_course,boolean[] checked,boolean[] path ){
         
-        if(checked[currentCourse]) return false;
-        if(courses[currentCourse]) return true;
+        if(checked[current_course])
+            return false;
+        if(path[current_course])
+            return true;
+        path[current_course] = true;
         
-        if(map.containsKey(currentCourse)){
-            courses[currentCourse] = true;
-            for(int preReq: map.get(currentCourse)){
-                if(courses[preReq] == true)
-                    return true;
-                if(map.containsKey(preReq))
-                    if(isCyclic(preReq,numCourses,courses,checked)) 
-                        return true;
+        if(map.containsKey(current_course)){
             
-        } 
-            courses[currentCourse] = false;
+            for(int prerequisite:map.get(current_course)){
+                if(path[prerequisite])
+                    return true;
+                if(isCyclic(prerequisite,checked,path))
+                    return true;
+                    
+            }
         }
-        checked[currentCourse] = true;
-        return false;
         
+        checked[current_course] = true;
+        path[current_course] = false;
+        return false;
     }
 }

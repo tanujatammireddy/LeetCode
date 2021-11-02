@@ -1,30 +1,27 @@
 class Solution {
     public int maximalNetworkRank(int n, int[][] roads) {
-        
-        int max= 0;
-        //Degree of a city
-        if(roads.length > 0){
-        Map<Integer,Integer> map = new HashMap();
-        Set<Pair<Integer,Integer>> set = new HashSet();
+        int maximalNetworkRank = 0;
+        int[] degree = new int[n];
+        boolean[][] connected = new boolean[n][n];
         for(int[] road: roads){
-            map.put(road[0], map.getOrDefault(road[0],0)+1);
-            map.put(road[1], map.getOrDefault(road[1],0)+1);
-            set.add(new Pair(road[0],road[1]));
+            degree[road[0]]++;
+            degree[road[1]]++;
+            connected[road[0]][road[1]] = true;
+            connected[road[1]][road[0]] = true;
         }
-        /*System.out.print(map);
-        System.out.print(set);*/
+        
+        int networkRank = 0;
         for(int i=0;i<n;i++){
             for(int j=i+1;j<n;j++){
+              networkRank =  degree[i]+degree[j];
+                if(connected[i][j] || connected[j][i])
+                    networkRank --;
                 
-                int count = map.getOrDefault(i,0)+map.getOrDefault(j,0);
-                if(count > 0){
-                if(set.contains(new Pair(i,j)) ||set.contains(new Pair(j,i)) )
-                    count--;
-                max = Math.max(count,max);
-                }
+                maximalNetworkRank= Math.max(maximalNetworkRank,networkRank);      
             }
         }
-        }
-        return max;
+        
+        return maximalNetworkRank;
+        
     }
 }

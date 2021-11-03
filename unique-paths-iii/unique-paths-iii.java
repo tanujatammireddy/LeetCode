@@ -17,7 +17,7 @@ class Solution {
         for(int i=0; i< row;i++){
             for(int j=0 ; j<col; j++){
                 if(grid[i][j] == 1)
-                {
+                {   
                     start_x = i;
                     start_y = j;
                 }  
@@ -46,7 +46,6 @@ class Solution {
             if(grid[x][y] == 0)
             emptySquares--;
             
-            //System.out.println("x: "+x+" y: "+y+" emptySquares:"+emptySquares);
             for(int[] direction : directions){
                 int X = x + direction[0];
                 int Y = y + direction[1];

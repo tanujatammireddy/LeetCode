@@ -1,16 +1,25 @@
 class Solution {
+    
     public int climbStairs(int n) {
-       Integer[] dp = new Integer[n+1];
-        return DP(n,dp);
+        
+        Integer[] dp = new Integer[n+1];
+        return fill_array(dp,n);
+        
     }
-    public int DP(int n,Integer[] dp){
-        if(n <= 0) return 0;
-        if(n == 1) return 1;
-        if(n == 2) return 2;
-        
-        if(dp[n] == null)
-            dp[n] = DP(n-1,dp) + DP(n-2,dp);
-        
+    public int fill_array(Integer[] dp,int n)
+    {   
+        if(dp[n] != null)
+            return dp[n];
+        else if(n<=0)
+            dp[n] = 0;
+        else if(n == 1)
+            dp[n] = 1;
+        else if(n == 2)
+            dp[n] = 2;
+        else
+            dp[n] = fill_array(dp,n-1)+ fill_array(dp,n-2);
+     
         return dp[n];
     }
+    
 }

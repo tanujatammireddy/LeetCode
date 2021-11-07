@@ -1,39 +1,52 @@
-import java.lang.Math;
 class Solution {
     public String multiply(String num1, String num2) {
-        int l1 = num1.length();
-        int l2 = num2.length();
+        int len = num1.length() + num2.length() +1;
+        int[] result = new int[len];
         
-        int[] result = new int [l1+l2];
-        int result_column = l1+l2-1, column = l1+l2-1;
+        int idx = len-1;
+        int carry = 0;
         int k = 0;
         
-        for(int i = l2-1; i >= 0 ;i--){
-            result_column = column - k;
-            for(int j = l1-1; j >=0 ;j--){
+        for(int i = num2.length()-1; i>=0 ;i--){ // num1
+            
+            idx = len-1-k;
+            carry = 0;
+            
+            for(int j = num1.length()-1; j>=0 ;j--){ // num2
                 
-            int current  = (Character.getNumericValue(num1.charAt(j))  * Character.getNumericValue(num2.charAt(i)))+ result[result_column] ;
-            result[result_column] = current% 10;
-            result[result_column-1] += current/10;
-            result_column--;
+                int current = (Character.getNumericValue(num1.charAt(j)) * Character.getNumericValue(num2.charAt(i)))+ carry +result[idx];
+                
+                if(current > 9){
+                    carry = current/10;
+                    current = current%10;
+                }
+                else
+                    carry = 0;
+                
+                result[idx] = current;
+                idx--;
                 
             }
+            if(carry > 0)
+                result[idx] = carry;
             k++;
+                
         }
+        return arrayToString(result);
+    }
+    public String arrayToString(int[] result){
+        int i = 0;
+        StringBuilder sb = new StringBuilder() ;
         
-        //System.out.println(Arrays.toString(result));
-        
-        StringBuilder sb = new StringBuilder();
-        int pointer =0;
-        while(pointer<=column && result[pointer] == 0)
-                pointer++;
-
-        if(pointer == column+1) return "0";
-        
-        while(pointer<= column){
-            sb.append(result[pointer]);
-            pointer++;
+        while(i< result.length && result[i]== 0){
+            i++;
         }
+        if(i== result.length)
+            return "0";
+        while(i< result.length){
+            sb.append(((char)result[i])+0);
+            i++;
+        }              
         
         return sb.toString();
     }

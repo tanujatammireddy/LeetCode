@@ -1,29 +1,31 @@
 class Solution {
-    public List<List<Integer>> returnList = new LinkedList();
-    public int len ;
     
     public List<List<Integer>> permute(int[] nums) {
-        this.len = nums.length;
-        boolean[] visited = new boolean[len];
-        backTrack(new LinkedList(), nums,visited);
+        
+        List<List<Integer>> returnList = new ArrayList();
+        boolean[] visited = new boolean[nums.length];
+        backTracking(nums,visited,returnList,new ArrayList());
         return returnList;
+        
     }
-    public void backTrack(List<Integer> subList, int[] nums,boolean[] visited ){
-        if(subList.size() == this.len){
-            returnList.add(new LinkedList(subList));
-            return;
-        }
-        for(int i=0;i< len;i++){
-            if(visited[i] == false){
-                visited[i] = true;
-                subList.add(nums[i]);
-                backTrack(subList, nums,visited);
-                int last_index = subList.size()-1;
-                subList.remove(last_index);
-                visited[i] = false;
+    public void backTracking( int[] nums,boolean[] visited, List<List<Integer>> returnList, List<Integer>list){
+        
+        //System.out.print(""+list);
+        if(list.size() == nums.length)
+            returnList.add(new ArrayList<>(list));
+        
+        else{
+            for(int i=0;i< nums.length;i++){
+                if(!visited[i]){
+                    visited[i] = true;  
+                    list.add(nums[i]);
+                    backTracking(nums,visited,returnList,list);
+                    list.remove(list.size()-1);
+                    visited[i] = false;    
             }
+            
+        }
         }
         
     }
-    
 }

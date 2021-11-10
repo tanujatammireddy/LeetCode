@@ -1,45 +1,58 @@
+class Details{
+    int ID;
+    String startStation;
+    String endStation;
+    int startTime;
+    int endTime;
+    public Details(int ID, String startStation,int startTime,String endStation, int endTime){
+        this.ID = ID;
+        this.startStation = startStation;
+        this.endStation = endStation;
+        this.startTime = startTime;
+        this.endTime = endTime;  
+    }
+}
 class UndergroundSystem {
     
-    Map<String,List<Double>> avgerageTimeMap = new HashMap();
-    Map<Integer,Pair<String,Integer>> checkInDataMap = new HashMap();
+    Map<Integer,Details> undergroundSystemDetailsMap;
+    Map<Pair<String,String>,List<Integer>> timeMap;
     public UndergroundSystem() {
-        
+        undergroundSystemDetailsMap = new HashMap();
+        timeMap = new HashMap();
     }
     
     public void checkIn(int id, String stationName, int t) {
-        checkInDataMap.put(id,new Pair<>(stationName,t));
+        Details d = new Details(id,stationName,t," ",0);
+        undergroundSystemDetailsMap.put(id,d);
     }
     
     public void checkOut(int id, String stationName, int t) {
-        if(checkInDataMap.containsKey(id)){
-            Pair<String,Integer> p = checkInDataMap.get(id);
-            String checkInStation = p.getKey();
-            int checkInTime = p.getValue();
-            double duration = (double) (t-checkInTime);
-            String key = checkInStation+":"+stationName;
-            if(avgerageTimeMap.containsKey(key)){
-                avgerageTimeMap.get(key).add(duration);
-            }
-            else{
-                List<Double> list = new ArrayList();
-                list.add(duration);
-               avgerageTimeMap.put(key,list); 
-            }    
+        
+        Details d = undergroundSystemDetailsMap.get(id);
+        d.endStation = stationName;
+        d.endTime = t;
+        undergroundSystemDetailsMap.put(id,d);
+        int time = t-d.startTime;
+        
+        Pair p = new Pair(d.startStation,d.endStation);
+        if(!timeMap.containsKey(p)){
+           timeMap.put(p, new ArrayList());
         }
+        
+        timeMap.get(p).add(time);
+        
     }
     
     public double getAverageTime(String startStation, String endStation) {
-       // System.out.println(""+avgerageTimeMap); 
-        String key = startStation+":"+endStation;
-        List<Double> list = avgerageTimeMap.get(key);
-        int sum=0;
-        for(Double t:list){
-            sum += t;
+        
+        List<Integer> list = timeMap.get(new Pair(startStation,endStation));
+        
+        double averageTime = 0;
+        for(int i=0; i< list.size() ;i++){
+            averageTime += list.get(i);
         }
-        //System.out.println("sum"+sum);
-        double avg = (double)sum/list.size();
-        //System.out.println("avg"+avg);
-        return avg;
+        
+        return averageTime/list.size();
     }
 }
 

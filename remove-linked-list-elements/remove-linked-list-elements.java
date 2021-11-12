@@ -11,25 +11,21 @@
 class Solution {
     public ListNode removeElements(ListNode head, int val) {
         
-        if(head != null){
-            
-            ListNode current = head;
-            ListNode temp = new ListNode(0);
-            ListNode previous = temp;
-            previous.next = head;
-            
-            while(current != null){
-            
-                if(current.val == val)
-                    previous.next = current.next;
-                else
-                    previous = current;
-                
-                current = current.next;
-                
-            }
-            return temp.next;
+        ListNode result = new ListNode(-1);
+        ListNode previous = result;
+        result.next = head;
+        
+        ListNode current = head;
+        
+        while(current != null){
+            if(current.val == val)
+                previous.next = current.next;
+            else
+                previous = current;
+            current = current.next;
         }
-        return head;
+        
+        return result.next;
+        
     }
 }

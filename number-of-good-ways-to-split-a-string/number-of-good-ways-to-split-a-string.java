@@ -2,28 +2,40 @@ class Solution {
     public int numSplits(String s) {
         
         int numSplits = 0;
+        int len = s.length()-1;
         
-        HashMap<Character,Integer> rightMap = new HashMap();
-        HashMap<Character,Integer> leftMap = new HashMap();
+        int[] left = new int[26];
+        int[] right = new int[26];
         
-        for(int i= 0; i<s.length() ;i++){
-           rightMap.put(s.charAt(i), rightMap.getOrDefault(s.charAt(i),0)+1);
+        int[] leftDistinct = new int[len];
+        int[] rightDistinct = new int[len];
+        
+        int leftDistinctCount = 0;
+        int rightDistinctCount = 0;
+        
+        for(int i= 0; i< len ;i++){
+            
+            char left_char = s.charAt(i);
+            char right_char = s.charAt(len-i);
+            
+            left[left_char-'a']++;
+            right[right_char-'a']++;
+            
+            if(left[left_char-'a'] == 1)
+                leftDistinctCount++;
+            
+            if(right[right_char-'a'] == 1)
+                rightDistinctCount++;
+            
+                rightDistinct[len-i-1] = rightDistinctCount;
+                leftDistinct[i] = leftDistinctCount;
+            
         }
         
-        for(int i= 0; i<s.length() ;i++){
+        for(int i= 0; i<len ;i++){
+           if(leftDistinct[i] == rightDistinct[i])
+               numSplits++;
             
-            char ch = s.charAt(i);
-            int count = rightMap.get(ch);
-            
-            if(count > 1)
-                rightMap.put(ch,count-1);
-            else
-                rightMap.remove(ch);
-            
-            leftMap.put(s.charAt(i), leftMap.getOrDefault(s.charAt(i),0)+1);
-            
-            if(leftMap.keySet().size() == rightMap.keySet().size())
-                numSplits++;
         }
         
         return numSplits;

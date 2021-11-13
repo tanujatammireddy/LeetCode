@@ -1,14 +1,21 @@
 class Solution {
     public int fib(int n) {
+        Integer[] dp = new Integer[n+1];
+        return dp(n,dp);
+    }
+    
+    public int dp(int n,Integer[] dp){
         
-        int[] memo = new int[n+1]; 
-        if(n == 0) return 0;
-        if(n == 1) return 1;
+        if(n<=0)
+            return 0;
+        if(n == 1)
+            return 1;
+        if(dp[n] != null)
+            return dp[n];
+        else
+            dp[n] = dp(n-1,dp)+ dp(n-2,dp);
         
-        memo[1] = 1;
-        for(int i=2;i<=n;i++){
-            memo[i] = memo[i-1] + memo[i-2];
-        }
-        return memo[n];
+        return dp[n];
+        
     }
 }

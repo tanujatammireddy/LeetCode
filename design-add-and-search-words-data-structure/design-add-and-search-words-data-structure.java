@@ -1,52 +1,83 @@
-class TrieNode {
-    Map<Character, TrieNode> children = new HashMap();
-    boolean word = false;
-    public TrieNode(){}
-
-}
 class WordDictionary {
-    
-    TrieNode trie;
+    TrieNode root;
     public WordDictionary() {
-        trie = new TrieNode();
+         root = new TrieNode('*');
     }
     
     public void addWord(String word) {
-        TrieNode node = trie;
-        for(char ch:word.toCharArray()){
-            
-            if(!node.children.containsKey(ch)){
-                node.children.put(ch,new TrieNode());
-            }
-            node = node.children.get(ch);
-        }
-        node.word = true;
+        if(word.length() > 0)
+            wordToTrie(word,0,root); 
     }
     
     public boolean search(String word) {
-        return searchInNode(word,trie);
+        
+        return searchInTrie(word,0,root); 
     }
+    
+    private boolean searchInTrie(String word, int pos, TrieNode root){
         
-    public boolean searchInNode(String word, TrieNode node) {
+        if(pos == word.length())
+            return root.word;
         
-        for(int i=0;i< word.length();i++){
-            char ch = word.charAt(i);
-            if(!node.children.containsKey(ch)){
-                if(ch == '.')
-                {
-                    for(char c: node.children.keySet()){
-                        TrieNode child = node.children.get(c);
-                        if(searchInNode(word.substring(i+1),child))
-                            return true;
-                        
+        char current = word.charAt(pos);
+        
+        
+        if(root.child.size() > 0){
+            
+            for(TrieNode child: root.child){
+                
+                if(current== '.'||child.ch == current)
+                {   
+                    if(searchInTrie(word,pos+1,child))
+                        return true;
+                }
+                
+            }
+        }
+        
+        return false;
+    }
+    
+    private void wordToTrie(String word, int pos, TrieNode root){
+        
+        if(pos == word.length()){
+            root.word = true;
+            return;
+        }
+        else{
+            
+            char current = word.charAt(pos);
+            boolean charFound = false;
+            
+            //System.out.println("current"+current);
+            
+            if(root.child.size() > 0){
+                for(TrieNode child: root.child){
+                    if(child.ch == current)
+                    {      
+                        charFound = true;
+                        wordToTrie(word,pos+1,child); 
+                        return;
                     }
                 }
-                return false;
             }
-            
-            node = node.children.get(ch);
+        if(!charFound)
+        {
+            TrieNode next = new TrieNode(current);
+            root.child.add(next);
+            wordToTrie(word,pos+1,next); 
         }
-        return node.word;
+    }
+    }
+}
+
+public class TrieNode{
+    char ch;
+    List<TrieNode> child;
+    boolean word = false;
+    public TrieNode(char c){
+        ch = c;
+        child = new ArrayList();
     }
 }
 

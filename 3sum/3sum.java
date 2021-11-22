@@ -1,33 +1,48 @@
 class Solution {
+    
+    private  List<List<Integer>> returnList;
+    
     public List<List<Integer>> threeSum(int[] nums) {
         
-        List<List<Integer>> returnList = new ArrayList();
+        returnList = new ArrayList();
         Arrays.sort(nums);
+        int i= 0;
         
-        for(int i= 0;i< nums.length ;i++)
-            if(i== 0 || nums[i-1]!= nums[i])
-                twoSum(nums,i,-nums[i],returnList);
-
+        while(i< nums.length){
+            
+            twoSum(nums,i);
+            int j = i+1;
+            while(j<nums.length && nums[i] == nums[j])
+                j++;
+            i= j;
+        }
+        
         return returnList;
     }
     
-    public void twoSum(int[] nums, int current , int sum, List<List<Integer>>  returnList){
+    public void twoSum(int[] nums, int pos){
         
+       
         Set<Integer> set = new HashSet();
         
-        for(int i= current+1;i< nums.length ;i++){
+        int i= pos+1;
+        while( i< nums.length){
             
-            if(set.contains(sum-nums[i])){
-                returnList.add(Arrays.asList(nums[current],sum-nums[i],nums[i]));
-                while(i+1< nums.length && nums[i] == nums[i+1])
+            int sum = nums[i] + nums[pos];
+            
+            if(set.contains(-sum)){
+                 returnList.add(Arrays.asList(nums[i],nums[pos],-sum));  
+                 int j = i+1;
+                 while(j<nums.length && nums[i] == nums[j])
+                     j++;
+                 i= j;
+            }
+            else{
+                set.add(nums[i]);
                 i++;
             }
-            else
-                set.add(nums[i]);
-            
-            
-          
         }
+        
         
     }
 }

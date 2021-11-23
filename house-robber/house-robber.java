@@ -1,22 +1,14 @@
 class Solution {
     public int rob(int[] nums) {
-      int houses = nums.length;
-      Integer[] dp = new Integer[houses];
-      return Math.max(fill_array(nums,dp,houses-2), fill_array(nums,dp,houses-1)); 
-    }
-    public int fill_array(int[] nums, Integer[] dp, int n)
-    {   
-        if(n< 0)
-            return 0;
-        if(n==0)
-            return nums[0];
-        if(n == 1)
-            dp[n] = nums[1];
-        if(dp[n] != null)
-            return dp[n];
-        else
-            dp[n] = Math.max(fill_array(nums,dp,n-2), fill_array(nums,dp,n-3)) + nums[n];
-     
-        return dp[n];
+        
+        int n = nums.length;
+        int[] dp = new int[n+1];
+        dp[n] = 0;
+        dp[n-1] = nums[n-1];
+        
+        for(int i= n-2; i>=0 ;i--){
+            dp[i] = Math.max(dp[i+1], dp[i+2] + nums[i]);
+        }
+        return dp[0];
     }
 }

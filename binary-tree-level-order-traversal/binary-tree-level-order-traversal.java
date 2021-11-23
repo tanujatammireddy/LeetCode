@@ -15,40 +15,38 @@
  */
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
-    
         
-        List<List<Integer>> returnList = new ArrayList();
-        if(root != null){
+        
+        List<List<Integer>> levelOrderList = new ArrayList();
         Queue<Pair<TreeNode,Integer>> queue = new LinkedList();
-        queue.add(new Pair(root,0));
+        
+        if(root != null)
+            queue.add(new Pair(root,0));
         
         while(!queue.isEmpty()){
             
-            Pair top = queue.poll();
             
-            TreeNode parent  = (TreeNode)top.getKey();
-            int currentLevel = (int)top.getValue()+1;
-            TreeNode left  = parent.left;
-            TreeNode right = parent.right;
+            Pair p = queue.poll();
+            TreeNode current = (TreeNode) p.getKey();
+            int currentLevel = (Integer) p.getValue();
             
-            if(currentLevel > returnList.size() )
-            {
-             List<Integer> sublist = new ArrayList();
-             sublist.add(parent.val);
-             returnList.add(sublist);
+            if(levelOrderList.size() == 0 || currentLevel == levelOrderList.size()  ){
+            levelOrderList.add(new ArrayList());
             }
-            else
-                returnList.get(currentLevel-1).add(parent.val);
+            levelOrderList.get(currentLevel).add(current.val);
             
-            if(left != null ){
-                queue.add(new Pair(left,currentLevel));
+            if(current.left != null)
+                queue.add(new Pair(current.left,currentLevel+1));
                 
-            }
-            if(right != null){
-                queue.add(new Pair(right,currentLevel));
-            }
+            if(current.right != null)
+                queue.add(new Pair(current.right,currentLevel+1));
         }
-        }
-        return returnList;
+        
+        
+        
+        
+        
+        return levelOrderList;
+        
     }
 }

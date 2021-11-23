@@ -15,42 +15,38 @@
  */
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> returnList = new ArrayList();
-        returnList = bfs(root);
-        int i= 1;
-        while(i< returnList.size()){
-                List<Integer> list = returnList.get(i);
-                Collections.reverse(list);
-                i = i+2;
-        }
-        return returnList;
-    }
-    public List<List<Integer>> bfs(TreeNode root){
-        List<List<Integer>> subList = new ArrayList();
+        
+        List<List<Integer>> zigzagLevelOrder = new ArrayList();
+        Queue<TreeNode> queue = new LinkedList();
+        
         if(root != null){
-            
-            Queue<Pair<TreeNode,Integer>> queue = new LinkedList();
-            queue.add(new Pair<>(root,0));
-            
-            while(!queue.isEmpty()){
-                
-                Pair p = queue.poll();
-                TreeNode currentNode = (TreeNode)p.getKey();
-                int currentLevel = (Integer)p.getValue();
-                
-                if(subList.isEmpty() ||currentLevel >= subList.size()){
-                    List<Integer> list = new ArrayList();
-                    subList.add(list);
-                } 
-                subList.get(currentLevel).add(currentNode.val);
-                        
-                if(currentNode.left != null)
-                    queue.add(new Pair(currentNode.left,currentLevel+1));
-                if(currentNode.right != null)
-                    queue.add(new Pair(currentNode.right,currentLevel+1));
-                    
-            }
+            queue.add(root);
         }
-        return subList;
+        int level = 0;
+        while(!queue.isEmpty()){
+            
+            int size = queue.size();
+            List<Integer> list = new ArrayList();
+            
+            for(int i=0 ;i< size ;i++){
+                
+                TreeNode current = queue.poll();
+                list.add(current.val);
+                
+                if(current.left != null)
+                    queue.add(current.left);
+                
+                if(current.right != null)
+                    queue.add(current.right);
+            }
+            
+            if(level % 2 == 1)
+                Collections.reverse(list);
+            zigzagLevelOrder.add(list);
+            level ++;
+        }
+        
+        
+        return zigzagLevelOrder;
     }
 }

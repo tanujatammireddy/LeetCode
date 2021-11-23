@@ -2,21 +2,20 @@ class Solution {
     public int rob(int[] nums) {
         
         int n = nums.length;
-        if(n == 1) return nums[0];
+        if(n == 1)
+            return nums[0];
+        return Math.max( max(0,n-1,nums),max(1,n,nums) );
         
-        return Math.max(fill(nums,0,n-2),fill(nums,1,n-1));
     }
-    public int fill(int[] nums,int start,int n){
+    
+    private int max(int start, int end, int[] nums){
         
-        int house_1 = 0;
-        int house_2 = 0;
-        int max = -1;
-        for(int i= start ;i<=n;i++){
-            max = Math.max( house_1+nums[i],house_2); 
-            house_1 = house_2;
-            house_2 = max;
+        int[] dp = new int[end+1];
+        dp[end] = 0;
+        dp[end-1] = nums[end-1];
+        for(int i= end-2; i>= start ; i--){
+            dp[i] = Math.max(dp[i+1], dp[i+2] + nums[i]);
         }
-        return max;
-        
-    } 
+        return dp[start];
+    }
 }

@@ -1,61 +1,66 @@
 class Solution {
     
-    Map<Integer,List<Integer>> map ;
-    boolean hasCycle = false;
-    int[] output;
-    public int index = 0;
+    int index = 0;
+    int[] result ;
+    boolean[] visited ;
+    int n;
+    boolean hasCycle;
+    Set<Integer> set;
     
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         
-        output = new int[numCourses];
-        map = new HashMap();
+        set = new HashSet();
+        result = new int[numCourses];
+        visited = new boolean[numCourses];
+        n= numCourses;
+        List<List<Integer>> list = new ArrayList();
         
-        for(int[] course:prerequisites){
-            List<Integer> list = map.getOrDefault(course[0],new ArrayList());
-            list.add(course[1]);
-            map.put(course[0],list);
+        for(int i= 0 ;i< numCourses; i++){
+            list.add(new ArrayList());
         }
         
-        boolean[] visited = new boolean[numCourses];
-        Set<Integer> set = new HashSet();
-        
-        for(int i=0; i< numCourses;i++){
+        for(int[] prereq:prerequisites){
             
-            if(!visited[i]){
-                
-            dfs(i,visited,set);
-                
+            int course = prereq[0];
+            int preReq = prereq[1];
+            list.get(course).add(preReq);
+            
+        }
+        
+        for(int i= 0 ;i< numCourses; i++){
+            if(! visited[i])
+                helper(i,list);
             if(hasCycle)
                 return new int[]{};
-            }
         }
-        return output;
+        
+       // System.out.println("list"+list);
+        return result;
         
     }
     
-    public void dfs(int current_course, boolean[] visited, Set<Integer> set){
+    public void helper(int course, List<List<Integer>> list){
         
-        if(visited[current_course])
+        if(index == n)
             return;
         
-        if(set.contains(current_course)){
+        if(set.contains(course))
+        {
             hasCycle = true;
             return;
-        }
-           
-        set.add(current_course);
-        
-        if(map.containsKey(current_course)){
-            
-        for(int prerequisite:map.get(current_course))
-            dfs(prerequisite,visited,set);
             
         }
-       
-        visited[current_course] = true;
-        output[index] = current_course;
-        index++;
+        else
+            set.add(course);
         
-            
+        for(int nextCourse: list.get(course)){
+            if(! visited[nextCourse])
+                helper(nextCourse,list);
+        }
+        
+        visited[course] = true;
+        result[index] = course;
+        index ++;
+        
     }
 }

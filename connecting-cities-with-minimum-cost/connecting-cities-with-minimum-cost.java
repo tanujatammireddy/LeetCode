@@ -25,7 +25,7 @@ class Solution {
         {
             Edge current = pq.poll();
             int destination = current.end;
-            System.out.println(""+destination);
+            //System.out.println(""+destination);
             
             if(visited[destination])
                 continue;

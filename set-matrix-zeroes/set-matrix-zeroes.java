@@ -1,27 +1,49 @@
 class Solution {
+    int row;
+    int col;
     public void setZeroes(int[][] matrix) {
+        row = matrix.length;
+        col = matrix[0].length;
         
-        Set<Integer> rows = new HashSet<>();
-        Set<Integer> cols = new HashSet<>();
-        
-        for(int i=0; i< matrix.length;i++){
-            for(int j=0; j< matrix[0].length;j++){
-                if(matrix[i][j]==0){
-                    rows.add(i);
-                    cols.add(j);
+        Set<Integer> row_Set = new HashSet();
+        Set<Integer> col_Set = new HashSet();
+        for(int i=0 ; i< row ;i++){
+            for(int j=0; j< col ;j++){
+                if(matrix[i][j] == 0){
+                    row_Set.add(i);
+                    col_Set.add(j);
                 }
-        }
-        }
-        for(int row:rows){
-            for(int j=0; j< matrix[0].length;j++){
-                matrix[row][j] =0;
-            }
-        }
-        for(int col:cols){
-        for(int i=0; i< matrix.length;i++){
-                matrix[i][col] =0;
             }
         }
         
+        if(row_Set.size() > 0){
+            matrix = set_row(matrix,row_Set);
+            matrix = set_col(matrix,col_Set);
+        }
+        
+       // return matrix;
+    }
+    
+    
+    public int[][] set_row(int[][] matrix, Set<Integer> row_Set ){
+        
+        for(int current:row_Set){
+            for(int j=0; j< col ;j++){
+                matrix[current][j] = 0;
+            }
+        }
+        
+        return matrix;
+    }
+    
+    public int[][] set_col(int[][] matrix, Set<Integer> col_Set ){
+        
+        for(int i=0; i< row; i++){
+            for(int current:col_Set){
+                matrix[i][current] = 0;
+            }
+        }
+        
+        return matrix;
     }
 }

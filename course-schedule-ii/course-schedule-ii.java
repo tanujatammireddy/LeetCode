@@ -1,66 +1,63 @@
 class Solution {
     
     int index = 0;
-    int[] result ;
+    int[] order;
     boolean[] visited ;
-    int n;
     boolean hasCycle;
-    Set<Integer> set;
+    boolean[] set ;
+    int n;
     
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
+    public int[] findOrder(int no, int[][] prerequisites) {
         
-        set = new HashSet();
-        result = new int[numCourses];
-        visited = new boolean[numCourses];
-        n= numCourses;
-        List<List<Integer>> list = new ArrayList();
+        List<List<Integer>> adjList = new ArrayList();
+        n = no;
+        visited = new boolean[n];
+        set = new boolean[n];
+        order = new int[n];
         
-        for(int i= 0 ;i< numCourses; i++){
-            list.add(new ArrayList());
+        for(int i= 0 ; i< n ;i++){
+            adjList.add(new ArrayList());
         }
-        
-        for(int[] prereq:prerequisites){
+        for(int[] preq: prerequisites){
             
-            int course = prereq[0];
-            int preReq = prereq[1];
-            list.get(course).add(preReq);
-            
+            adjList.get(preq[0]).add(preq[1]);
         }
         
-        for(int i= 0 ;i< numCourses; i++){
-            if(! visited[i])
-                helper(i,list);
-            if(hasCycle)
-                return new int[]{};
+        for(int i= 0;i< n;i++){
+            if(!visited[i]){
+                order(i,adjList);
+                
+                if(hasCycle)
+                    return new int[]{};
+            }
         }
         
-       // System.out.println("list"+list);
-        return result;
+        return order;
+        
         
     }
     
-    public void helper(int course, List<List<Integer>> list){
+    public void order(int current,List<List<Integer>> adjList){
         
         if(index == n)
             return;
-        
-        if(set.contains(course))
-        {
+        if(set[current]){
             hasCycle = true;
             return;
-            
         }
         else
-            set.add(course);
+            set[current] = true;
         
-        for(int nextCourse: list.get(course)){
-            if(! visited[nextCourse])
-                helper(nextCourse,list);
+        for(int preq: adjList.get(current)){
+            if( !visited[preq])
+            {
+                order(preq,adjList);
+            }
         }
         
-        visited[course] = true;
-        result[index] = course;
-        index ++;
+        visited[current] = true;
+        order[index] = current;
+        index++;
         
     }
 }

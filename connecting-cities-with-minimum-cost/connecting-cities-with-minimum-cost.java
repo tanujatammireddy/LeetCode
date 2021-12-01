@@ -3,61 +3,59 @@ class Solution {
         
         int minimumCost = 0;
         int citiesVisited = 0;
-        
-        PriorityQueue<Edge>  pq = new  PriorityQueue();
         boolean[] visited = new boolean[n+1];
-        Map<Integer, List<Edge>> map = new HashMap();
+        List<List<Edge>> adjList = new ArrayList();
         
-        
-        for(int[] connection:connections){
+        for(int i= 0 ; i<=n ;i++){
+           adjList.add(new ArrayList()); 
+        }
+        for(int[] edge: connections){
             
-            if(!map.containsKey(connection[0]))
-                map.put(connection[0], new ArrayList());
-            if(!map.containsKey(connection[1]))
-                map.put(connection[1], new ArrayList());
-            
-            map.get(connection[1]).add(new Edge(connection[1],connection[0],connection[2]));
-            map.get(connection[0]).add(new Edge(connection[0],connection[1],connection[2]));
+            adjList.get(edge[0]).add(new Edge(edge[0],edge[1],edge[2])); 
+            adjList.get(edge[1]).add(new Edge(edge[1],edge[0],edge[2])); 
         }
         
+        PriorityQueue<Edge> pq = new PriorityQueue();
         pq.add(new Edge(0,1,0));
-        while(!pq.isEmpty())
-        {
+        
+        while(!pq.isEmpty()){
+            
             Edge current = pq.poll();
             int destination = current.end;
-            //System.out.println(""+destination);
             
             if(visited[destination])
                 continue;
-            citiesVisited++;
             
+            citiesVisited++;
             minimumCost += current.cost;
             visited[destination] = true;
             
-            for(Edge next : map.get(destination)){
+            if(citiesVisited == n)
+                break;
+            
+            for(Edge next: adjList.get(destination)){
                 if(!visited[next.end])
                     pq.add(next);
-                    
             }
             
         }
-       
-        return (citiesVisited != n)? -1: minimumCost;
         
+        
+        return (citiesVisited == n) ? minimumCost : -1;
     }
     
-    public class Edge implements Comparable<Edge> {
+    public class Edge implements Comparable<Edge>{
         int start;
         int end;
         int cost;
-        public Edge(int s,int e,int c){
-            start = s;
-            end = e;
-            cost = c;
-        }
-        @Override
-        public int compareTo(Edge other) {
-            return cost - other.cost;
-        }
+    public Edge(int start, int end, int cost){
+        this.start = start;
+        this.end = end;
+        this.cost = cost;
+    }
+    @Override
+    public int compareTo(Edge other){
+        return cost-other.cost;
+    }
     }
 }

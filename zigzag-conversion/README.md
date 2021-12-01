@@ -1,3 +1,4 @@
+[Discussion Post (created on 1/11/2021 at 12:34)](https://leetcode.com/problems/zigzag-conversion/discuss/1606570/JAVAor-Easy-To-understand-or-O(n)-or-85)  
 <h2>6. Zigzag Conversion</h2><h3>Medium</h3><hr><div><p>The string <code>"PAYPALISHIRING"</code> is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)</p>
 
 <pre>P   A   H   N

@@ -1,45 +1,62 @@
 class Solution {
-    public Map<Integer,List<Integer>> map ;
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
-      
-        map = new HashMap();
-        
-        for(int[] course:prerequisites){
-            List<Integer> list = map.getOrDefault(course[0],new ArrayList());
-            list.add(course[1]);
-            map.put(course[0],list);
-        }
-        boolean[] checked = new boolean[numCourses];
-        boolean[] path = new boolean[numCourses];
-        for(int current_course:map.keySet()){
-            if(isCyclic(current_course,checked,path))
-                return false;
-        }
-        
-        return true;
-    }
     
-    public boolean isCyclic (int current_course,boolean[] checked,boolean[] path ){
+    int index = 0;
+    int[] order;
+    boolean[] visited ;
+    boolean hasCycle;
+    boolean[] set ;
+    int n;
+    
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
         
-        if(checked[current_course])
-            return false;
-        if(path[current_course])
-            return true;
-        path[current_course] = true;
+        List<List<Integer>> adjList = new ArrayList();
+        n = numCourses;
+        visited = new boolean[n];
+        set = new boolean[n];
+        order = new int[n];
         
-        if(map.containsKey(current_course)){
+        for(int i= 0 ; i< n ;i++){
+            adjList.add(new ArrayList());
+        }
+        for(int[] preq: prerequisites){
             
-            for(int prerequisite:map.get(current_course)){
-                if(path[prerequisite])
-                    return true;
-                if(isCyclic(prerequisite,checked,path))
-                    return true;
-                    
+            adjList.get(preq[0]).add(preq[1]);
+        }
+        
+        for(int i= 0;i< n;i++){
+            if(!visited[i]){
+                order(i,adjList);
+                
+                if(hasCycle)
+                    return false;
             }
         }
         
-        checked[current_course] = true;
-        path[current_course] = false;
-        return false;
+        return true;
+        
+        
+    }
+    
+    public void order(int current,List<List<Integer>> adjList){
+        
+        if(set[current]){
+            hasCycle = true;
+            return;
+        }
+        else
+            set[current] = true;
+        
+        for(int preq: adjList.get(current)){
+            if( !visited[preq])
+            {
+                order(preq,adjList);
+            }
+        }
+        
+        visited[current] = true;
+        order[index] = current;
+        index++;
+        
     }
 }
+

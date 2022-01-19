@@ -2,6 +2,7 @@ class Solution {
     
     private int[] orginal;
     private int[] arr;
+    Random rand = new Random();
     
     public Solution(int[] nums) {
         orginal = nums.clone();
@@ -28,7 +29,6 @@ class Solution {
         
     }
     private int randomIndex(int min, int max){
-        Random rand = new Random();
         return rand.nextInt(max- min) + min;
     }
 }

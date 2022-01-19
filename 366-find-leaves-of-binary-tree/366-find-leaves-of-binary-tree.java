@@ -14,41 +14,44 @@
  * }
  */
 class Solution {
-    
     public List<List<Integer>> findLeaves(TreeNode root) {
         
-        List<List<Integer>> leafNodes = new ArrayList();
+        List<List<Integer>> leavesList = new ArrayList();
         
         if(root != null)
-            helper(root,leafNodes);
+            helper(root,leavesList);
         
-        return leafNodes;
+        return leavesList;
         
     }
     
-    public int helper(TreeNode root, List<List<Integer>> leafNodes){
+    public int helper(TreeNode root,List<List<Integer>> leavesList){
         
-        int depth = 0;
+        int depth = -1;
         if(root.left == null && root.right == null){
+            depth = 0;
         }
         else{
-            int depth_left = 0;
-            int depth_right = 0;
+            
+            int left_depth = 0;
+            int right_depth = 0;
             if(root.left != null){
-                depth_left = helper(root.left,leafNodes);
-            } 
-            if(root.right != null){
-                depth_right = helper(root.right,leafNodes);
+                left_depth = helper(root.left,leavesList);
             }
-            depth = Math.max(depth_left,depth_right)+1  ;
+            if(root.right != null){
+                right_depth = helper(root.right,leavesList);
+            }
+            
+            depth = Math.max(left_depth,right_depth) + 1;
+            
         }
         
-        if(leafNodes.size() <= depth)
-                leafNodes.add(new ArrayList());
+        if(leavesList.size() <= depth)
+        {
+           leavesList.add(new ArrayList());
+        }
+        leavesList.get(depth).add(root.val);
+        return depth;  
         
-         leafNodes.get(depth).add(root.val);
-        
-        return depth;
-            
     }
 }

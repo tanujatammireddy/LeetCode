@@ -18,10 +18,9 @@ class Solution {
     public List<List<Integer>> findLeaves(TreeNode root) {
         
         List<List<Integer>> leafNodes = new ArrayList();
-        List<Pair<TreeNode,Integer>> nodes = new ArrayList();
+        
         if(root != null)
             helper(root,leafNodes);
-    
         
         return leafNodes;
         

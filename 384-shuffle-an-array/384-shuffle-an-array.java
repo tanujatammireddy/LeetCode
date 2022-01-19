@@ -1,34 +1,34 @@
 class Solution {
-    private int[] array;
-    private int[] original;
-
-    Random rand = new Random();
-
-    private int randRange(int min, int max) {
-        return rand.nextInt(max - min) + min;
-    }
-
-    private void swapAt(int i, int j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-
+    
+    private int[] orginal;
+    private int[] arr;
+    
     public Solution(int[] nums) {
-        array = nums;
-        original = nums.clone();
+        orginal = nums.clone();
+        arr = nums;
     }
     
     public int[] reset() {
-        array = original;
-        original = original.clone();
-        return original;
+       arr = orginal;
+       orginal = orginal.clone();
+       return  orginal;
     }
     
     public int[] shuffle() {
-        for (int i = 0; i < array.length; i++) {
-            swapAt(i, randRange(i, array.length));
+        
+        for(int i= 0; i< arr.length; i++){
+            swap(i,randomIndex(i,arr.length));
         }
-        return array;
+        return arr;
+    }
+    private void swap(int i, int j){
+        int temp = arr[i];
+        arr[i] = arr[j] ;
+        arr[j] = temp;
+        
+    }
+    private int randomIndex(int min, int max){
+        Random rand = new Random();
+        return rand.nextInt(max- min) + min;
     }
 }

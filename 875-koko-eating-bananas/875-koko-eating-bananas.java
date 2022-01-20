@@ -17,7 +17,7 @@ class Solution {
             
            // System.out.println("min"+min+" max"+max+" mid"+mid);
             
-            if(canEat(piles.clone(),h,mid))
+            if(canEat(piles,h,mid))
                 max = mid;
             else
                 min = mid+1;

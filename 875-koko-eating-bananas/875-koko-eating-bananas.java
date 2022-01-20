@@ -8,14 +8,10 @@ class Solution {
         for(int pile:piles){
             max = Math.max(max,pile);
         }
-        
-        
-        
+         
         while(min < max){
             
             int mid = min +(max-min)/2;
-            
-           // System.out.println("min"+min+" max"+max+" mid"+mid);
             
             if(canEat(piles,h,mid))
                 max = mid;

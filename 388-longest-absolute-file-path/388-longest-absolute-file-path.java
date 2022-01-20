@@ -12,7 +12,7 @@ class Solution {
             
             stack[lev] = stack[lev-1] + s.length() - lev + 2;
             
-            System.out.println(s+" lev: "+lev+" stack[lev]:"+stack[lev]);
+            //System.out.println(s+" lev: "+lev+" stack[lev]:"+stack[lev]);
             if (s.contains(".")) {
                 maxLen = Math.max(maxLen, stack[lev]);
             }

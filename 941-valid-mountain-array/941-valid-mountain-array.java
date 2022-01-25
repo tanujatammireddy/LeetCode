@@ -3,8 +3,6 @@ class Solution {
         
         boolean peak = false;
         boolean valley = false;
-        if(arr.length == 1)
-            return false;
         for(int i= 1;i< arr.length; i++){
             
             if(arr[i-1]== arr[i])

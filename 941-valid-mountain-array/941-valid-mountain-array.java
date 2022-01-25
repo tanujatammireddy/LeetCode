@@ -1,27 +1,36 @@
 class Solution {
     public boolean validMountainArray(int[] arr) {
         
-        boolean peak = false;
-        boolean valley = false;
-        for(int i= 1;i< arr.length; i++){
+        int i = 1;
+        
+        while(i < arr.length && arr[i-1] < arr[i]){
             
             if(arr[i-1]== arr[i])
                 return false;
-            if(arr[i-1] < arr[i]){
-                if(valley)
-                    return false;
-                peak = true;
+            
+            else if(arr[i-1] > arr[i]){
+                break;
             }
-            if(arr[i-1] > arr[i]){
-                valley = true;
-                if(!peak)
-                    return false;
-            }
-            
-            
-            
+          i++;  
         }
         
-        return valley && peak;
+        if(i == arr.length || i== 1)
+            return false;
+        
+        while(i < arr.length && arr[i-1] > arr[i]){
+            
+            if(arr[i-1]== arr[i])
+                return false;
+            
+            else if(arr[i-1] < arr[i]){
+                break;
+            }
+          i++;  
+        }
+        
+        if(i != arr.length)
+            return false;
+        
+        return true;
     }
 }

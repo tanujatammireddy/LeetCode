@@ -30,7 +30,7 @@ class Solution {
                 TreeNode current = queue.poll();
                 
                 if(current == u){
-                    
+                
                     if(!queue.isEmpty() && i+1 < size){
                         return queue.poll();
                     }    

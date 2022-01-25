@@ -24,17 +24,15 @@ class Solution {
             
             int size = queue.size();
             int i= 0;
+            
             while(i< size){
                 
                 TreeNode current = queue.poll();
                 
                 if(current == u){
                     
-                    while(!queue.isEmpty() && i+1 < size){
-                        TreeNode next = queue.poll();
-                        if(next.val != -1)
-                           return next;
-                        i++;
+                    if(!queue.isEmpty() && i+1 < size){
+                        return queue.poll();
                     }    
                     
                     return null;
@@ -43,12 +41,8 @@ class Solution {
                     
                     if(current.left != null)
                         queue.add(current.left);
-                    else
-                        queue.add(new TreeNode(-1));
                     if(current.right != null)
                         queue.add(current.right);
-                    else
-                        queue.add(new TreeNode(-1));
                 }
                 
                 i++;

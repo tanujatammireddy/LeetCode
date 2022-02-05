@@ -21,8 +21,9 @@ class Solution {
         
         if(root == null ||(root.left == null && root.right == null))
             return;
-        TreeNode temp = root;
-        preOrder(temp);
+        
+        //TreeNode temp = root;
+        preOrder(root);
         
         TreeNode next = root;
         next.left = null;

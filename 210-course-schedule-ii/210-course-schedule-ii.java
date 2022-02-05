@@ -1,56 +1,60 @@
 class Solution {
-    private int n;
-    int[] order;
+    
     int idx = 0;
-    boolean[] visited;
-    boolean[] added;
-    boolean hasCycle;
+    int[] order;
+    boolean hasCycle = false;
+    boolean[] visited ;
+    boolean[] set;
+    int n;
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         
-        List<List<Integer>> adjacencyList = new ArrayList();
+        List<List<Integer>> preqList = new ArrayList();
+        order = new int[numCourses];
         visited = new boolean[numCourses];
-        added = new boolean[numCourses];
+        set = new boolean[numCourses];
         n = numCourses;
-        order = new int[n];
-        for(int i= 0;i< numCourses; i++){
-            adjacencyList.add(new ArrayList());
-        }
         
+        for(int i=0; i< numCourses;i++){
+            preqList.add(new ArrayList());
+        }
         for(int[] preq: prerequisites){
-            int course = preq[0];
-            int pre = preq[1];
-            adjacencyList.get(course).add(pre);
+            preqList.get(preq[0]).add(preq[1]);
         }
+        //System.out.println(preqList);
         
-        for(int i= 0; i< numCourses; i++){
+        for(int i=0; i< n;i++){
             if(!visited[i]){
-                helper(i,adjacencyList);
+                helper(i,preqList);
+                if(hasCycle)
+                    return new int[]{};
             }
-            if(hasCycle)
-                return new int[]{};
         }
-        return order;
         
+        return order;
     }
     
-    public void helper(int currentCourse, List<List<Integer>> adjacencyList){
-        if(idx == n)
-            return;
+    public void helper(int currentCourse,List<List<Integer>> preqList){
         
-        if(added[currentCourse]){
+        if(set[currentCourse])
+        {
             hasCycle = true;
             return;
         }
-        added[currentCourse] = true;
+        set[currentCourse] = true;
+        if(idx == n)
+            return;
         
-        for(Integer preq: adjacencyList.get(currentCourse)){
+        
+        for(int preq: preqList.get(currentCourse)){
             if(!visited[preq]){
-                helper(preq,adjacencyList);
+                helper(preq,preqList);
             }
         }
         
-        visited[currentCourse]= true;
+        visited[currentCourse] = true;
         order[idx] = currentCourse;
+        
         idx++;
+        
     }
 }

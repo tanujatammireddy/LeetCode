@@ -3,7 +3,7 @@ class Solution {
     public int minimumCost(int n, int[][] connections) {
         
         int minimumCost = 0;
-        
+        int citiesVisited = 0;
         List<List<Edge>> adjacencyList = new ArrayList();
         
         for(int i= 0 ;i<= n ;i++){
@@ -15,7 +15,7 @@ class Solution {
             adjacencyList.get(connection[1]).add(new Edge(connection[1],connection[0],connection[2]));  
         }
         
-        Set<Integer >visited = new HashSet();
+        boolean[] visited = new boolean[n+1];
         Queue<Edge> pq = new PriorityQueue();
         
         pq.add(new Edge(0,1,0));
@@ -24,14 +24,13 @@ class Solution {
             
             Edge current = pq.poll();
             int next_start = current.end;
-            if(visited.contains(next_start))
-                continue;
-            else
+            if(!visited[next_start])
             {
                 minimumCost += current.cost;
-                visited.add(next_start);
+                citiesVisited++;
+                visited[next_start] = true;
                 for(Edge next: adjacencyList.get(next_start)){
-                    if(!visited.contains(next.start) || !visited.contains(next.end))
+                    if(!visited[next.end])
                     pq.add(next);
                 }
                     
@@ -41,7 +40,7 @@ class Solution {
             
         }
         
-        return (visited.size() == n)?minimumCost:-1;
+        return (citiesVisited == n)?minimumCost:-1;
         
     }
     

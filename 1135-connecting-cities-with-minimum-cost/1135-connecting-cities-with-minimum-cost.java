@@ -31,6 +31,7 @@ class Solution {
                 minimumCost += current.cost;
                 visited.add(next_start);
                 for(Edge next: adjacencyList.get(next_start)){
+                    if(!visited.contains(next.start) || !visited.contains(next.end))
                     pq.add(next);
                 }
                     

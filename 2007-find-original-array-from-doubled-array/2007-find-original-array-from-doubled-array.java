@@ -32,6 +32,7 @@ class Solution {
         
         Arrays.sort(changed);
         for(int curr: changed){
+            
             if(curr == 0)
                 continue;
             int count = map.get(curr);
@@ -44,8 +45,6 @@ class Solution {
                     map.put(curr*2,double_value_count-1);
                     map.put(curr,count-1);
                 }
-                
-                
             }
             }
         

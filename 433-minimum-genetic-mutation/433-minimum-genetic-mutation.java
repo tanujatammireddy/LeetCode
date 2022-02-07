@@ -13,13 +13,12 @@ class Solution {
         while(!queue.isEmpty()){
             
             int size = queue.size();
-            count++;
             for(int i=0; i< size;i++){
                 
                 //System.out.println(queue);
                 String current = queue.poll();
                 if(current.equals(end))
-                    return count-1;
+                    return count;
                 List<String> mutations = generateMutation(current);
         
                 for(String mutation :mutations){
@@ -30,6 +29,7 @@ class Solution {
                 }
                 
             }
+            count++;
         }
         
        return -1;   

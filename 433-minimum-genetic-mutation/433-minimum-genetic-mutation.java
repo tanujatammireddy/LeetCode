@@ -5,7 +5,7 @@ class Solution {
         for(int i=0;i< bank.length;i++){
             geneBank.add(bank[i]);
         }
-       // if(!geneBank.contains(end)) return -1;
+        if(!geneBank.contains(end)) return -1;
         
         int count = 0;
         Queue<String> queue = new LinkedList();

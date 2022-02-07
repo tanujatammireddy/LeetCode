@@ -6,7 +6,6 @@ class Solution {
         
         int[][] directions = {{0,1},{1,0},{0,-1},{-1,0}};
         boolean visited[][] = new boolean[n][n];
-        int landCount = 0;
         
         Queue<int[]> queue = new LinkedList();
         
@@ -16,13 +15,12 @@ class Solution {
                 if(grid[i][j] == 1)
                 {
                     queue.add(new int[]{i,j});
-                    landCount++;
                     visited[i][j] = true; 
                 }
                 
             }
         }
-        if(landCount == n*n || landCount == 0)
+        if(queue.size() == n*n || queue.size() == 0)
             return -1;
         
         // Using BFS to calculate the distance to water, 

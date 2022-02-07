@@ -1,90 +1,50 @@
 class Solution {
     public int shortestPath(int[][] grid, int k) {
         
-        Queue<state> queue = new LinkedList();
+        int row = grid.length;
+        int col = grid[0].length;
+        boolean[][][] visited = new boolean[row][col][k+1];
+        int[][] directions = {{0,1},{1,0},{0,-1},{-1,0}};
+        int steps = 0;
+        Queue<int[]> queue = new LinkedList();
+        queue.add(new int[]{0,0,0});
+        visited[0][0][0]= true;
         
-        int[][] directions= {{0,1},{0,-1},{1,0},{-1,0}};
-        int row = grid.length-1;
-        int col = grid[0].length-1;
-        
-        // Manhattan distance 
-        if (k >= row+col ) 
-            return row + col;
-        
-        Set<state> visited = new HashSet();
-        
-        state start = new state(0,0,k,0);
-        queue.add(start);
-        visited.add(start);
-        
-        
-        while(!queue.isEmpty())
-        {
-            state current = queue.poll();
-            int x = current.x;
-            int y = current.y;
-            int obs = current.k;
-            if( x== row && y== col)
-                return current.steps;
+        while(!queue.isEmpty()){
             
-            if (grid[x][y] == 1) {
-                obs--;
-                if (obs < 0) continue;
-            }
+            int size = queue.size();
             
-            for(int[] dir: directions)
-            {
-                int X = x + dir[0];
-                int Y = y + dir[1];
-                int steps = current.steps;
+            for(int i=0;i< size;i++){
                 
-                if(X>=0 && X<=row && Y>=0 && Y<= col)
-                {
-                    state neighbour = new state(X,Y,obs,steps+1);
-                    if(!visited.contains(neighbour)){
-                        visited.add(neighbour);
-                        queue.add(neighbour);
-                    }
-                    
+                int[] current = queue.poll();
+                int x = current[0];
+                int y = current[1];
+                int obs = current[2];
+                
+                if(x == row-1 && y== col-1){
+                    return steps;
                 }
-            }
                 
+                for(int[] dir:directions){
+                    
+                    int X = x + dir[0];
+                    int Y = y + dir[1];
+                    
+                    if(X>=0 && X< row && Y>=0 && Y< col){
+                        
+                        int obs_new = obs + grid[X][Y];
+                        if(obs_new > k) continue;
+                        if(!visited[X][Y][obs_new]){
+                            queue.add(new int[]{X,Y,obs_new});
+                            visited[X][Y][obs_new]= true;
+                        }
+                    }
+                }
+            } 
+            steps++;
         }
         
         return -1;
         
-    }
-    class state{
-        int x;
-        int y;
-        int k;
-        int steps;
-        
-        public state(int x,int y, int k, int steps){
-            this.x = x;
-            this.y = y;
-            this.k = k;
-            this.steps = steps;
-            
-        }
-        @Override
-        public int hashCode(){
-            return (this.x+1)*(this.y+1)*(this.k);
-        }
-        @Override
-        public String toString(){
-            return String.valueOf(this.x)+String.valueOf(this.y) + String.valueOf(this.k);
-        }
-        
-        @Override
-        public boolean equals(Object other){
-            
-            if(other == null) 
-                return false;
-            if (!(other instanceof state)) 
-                return false;
-            state newState = (state) other;
-            return (newState.x == this.x)&&(newState.y == this.y)&&(newState.k == this.k);
-        }
     }
 }

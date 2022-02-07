@@ -1,55 +1,60 @@
 class Solution {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        Queue<String> queue = new LinkedList();
-        Set<String> words = new HashSet<>(wordList);
         
+        Set<String> words = new HashSet<>(wordList);
+        Queue<String> queue = new LinkedList();
         queue.add(beginWord);
         int level = 0;
-        
         while(!queue.isEmpty()){
             int size = queue.size();
-            level++;
-            
-            for(int i=0; i< size; i++){
-                
-                String currentWord = queue.poll();
-                if(currentWord.equals(endWord))
+            level ++;
+            for(int i=0;i< size; i++){
+                //System.out.print(queue);
+                String current = queue.poll();
+                if(current.equals(endWord))
                     return level;
-                List<String> neighbours = neighbours(currentWord);
-                for(String neigh: neighbours){
-                    if(words.contains(neigh)){
-                        words.remove(neigh);
-                        queue.add(neigh);
+                List<String> possibleValues = possibleValues(current);
+                for(String possibleValue: possibleValues){
+                    if(words.contains(possibleValue)){
+                        words.remove(possibleValue);
+                        queue.add(possibleValue);
                     }
                 }
             }
-            
         }
-        return 0;
         
+       return 0; 
+        
+    }
+
+public List<String> possibleValues(String word){
+    
+    List<String> result = new ArrayList();
+    char[] charArray = word.toCharArray();
+    for(int i=0;i< word.length();i++){
+        char temp = charArray[i];
+        for(char c='a';c<='z';c++){
+            charArray[i] = c;
+            String newValue = String.valueOf(charArray);
+            result.add(newValue);
+        }
+        charArray[i] = temp;
     }
     
-    public List<String> neighbours(String word){
-        
-        char[] charArray = word.toCharArray();
-        List<String> result = new ArrayList();
-        for(int i=0 ;i< charArray.length;i++){
-            char temp = charArray[i];
-            for(char c= 'a';c<='z';c++){
-                charArray[i] = c;
-                String neighbour = String.valueOf(charArray);
-                result.add(neighbour);
-            }
-            charArray[i] = temp;
-        }
-        return result;
-    }
+    return result;
+}
 }
 
-/**
-M- length of word
-N - lengtj of list
-helper - O(M^2)*N //Cost of creating a string is Length of the String- M 
+/** 
+beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
 
-Space Complexity- O(M*N)
+hit 
+
+Possible values: *it, h*t, hi*
+if wordList has any the possible values
+add it to the queue and repeat till we find the endWord
+
+We are using bfs.
+
+
 **/

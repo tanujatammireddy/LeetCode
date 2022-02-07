@@ -5,10 +5,11 @@ class Solution {
         if(len%2 == 1)
             return new int[]{};
         Map<Integer,Integer> map = new HashMap();
-        
         int zeroCount = 0;
+        int idx = 0;
+        int[] result = new int[changed.length/2];
+        
         for(int i=0 ;i< len;i++){
-            
             
             int val = changed[i];
             if(val == 0)
@@ -23,8 +24,11 @@ class Solution {
          if(zeroCount%2 == 1)
             return new int[]{};
         zeroCount = zeroCount/2;
-        int idx = 0;
-        int[] result = new int[changed.length/2];
+        while(zeroCount > 0){
+            result[idx] = 0;
+            idx++;
+            zeroCount--;
+        }
         
         Arrays.sort(changed);
         for(int curr: changed){
@@ -44,11 +48,7 @@ class Solution {
                 
             }
             }
-        while(zeroCount > 0){
-            result[idx] = 0;
-            idx++;
-            zeroCount--;
-        }
+        
         return (idx == len/2)?result:new int[]{} ;
     }
 }

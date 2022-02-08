@@ -1,16 +1,15 @@
 class Solution {
-    int len;
+    
     boolean [] visited;
     public boolean canReach(int[] arr, int start) {
         
-        len = arr.length;
-        visited = new boolean[len];
+        visited = new boolean[arr.length];
         return helper(arr,start);
     }
     
     public boolean helper(int[] arr, int pos){
         
-        if(pos >= 0 && pos < len && !(visited[pos])){
+        if(pos >= 0 && pos < arr.length && !(visited[pos])){
             
             if(arr[pos] == 0)
                 return true;

@@ -8,27 +8,30 @@
  * }
  */
 class Solution {
-    
-    TreeNode LCA;
+    private TreeNode LCA;
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         
-        recursion(root,p,q);
+        if(root != null)
+            helper(root,p,q);
+        
         return LCA;
     }
     
-    public boolean recursion(TreeNode node, TreeNode p, TreeNode q){
+    public boolean helper(TreeNode node,TreeNode p, TreeNode q) {
         
         if(node == null)
             return false;
         
-        int left = recursion(node.left,p,q)? 1:0;
-        int right = recursion(node.right,p,q)? 1:0;
+        int left = helper(node.left,p,q) ? 1:0;
+        int right = helper(node.right,p,q) ? 1:0;
         
-        int mid  = ((node == p)||(node == q)) ? 1:0;
+        int mid = (node == p) ||(node ==q) ? 1:0;
         
-        if(mid + left + right >= 2)
+        if(left + right + mid >= 2)
             LCA = node;
         
-        return (left + right + mid > 0); 
+        return (left + right + mid >0);
+        
+        
     }
 }

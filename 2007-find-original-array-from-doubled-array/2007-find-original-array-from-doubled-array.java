@@ -1,53 +1,58 @@
 class Solution {
     public int[] findOriginalArray(int[] changed) {
         
-        int len = changed.length;
-        if(len%2 == 1)
-            return new int[]{};
-        Map<Integer,Integer> map = new HashMap();
-        int zeroCount = 0;
-        int idx = 0;
-        int[] result = new int[changed.length/2];
         
-        for(int i=0 ;i< len;i++){
+        int len = changed.length;
+        if(len %2 == 1)
+            return new int[]{};
+        int[] result = new int[len/2];
+        int idx = 0;
+        int zeroCount = 0;
+        HashMap<Integer,Integer> map = new HashMap();
+        
+        for(int num:changed){
             
-            int val = changed[i];
-            if(val == 0)
-            {
+            if(num== 0)
                 zeroCount++;
-                continue;
+            else
+            {
+                int count = map.getOrDefault(num,0) +1;
+                map.put(num,count);
             }
-            int count = map.getOrDefault(val,0)+1;
-            map.put(val,count);
+            
+            
         }
         
-         if(zeroCount%2 == 1)
-            return new int[]{};
+        if(zeroCount > 0)
+        {
+            if(zeroCount%2 == 1)
+                return new int[]{};
+        }
+        Arrays.sort(changed);
         zeroCount = zeroCount/2;
-        while(zeroCount > 0){
+        for(int num:changed){
+            
+            if(num == 0) continue;
+            int count = map.get(num);
+            if(count > 0){
+                int doubleValue = num*2;
+                int doubleValueCount = map.getOrDefault(doubleValue,0);
+                if( doubleValueCount > 0){
+                    result[idx] = num;
+                    map.put(num,count-1);
+                    map.put(doubleValue,doubleValueCount-1);
+                    idx++;
+                }
+            }
+            
+        }
+        
+        while(zeroCount >0){
             result[idx] = 0;
             idx++;
             zeroCount--;
         }
+        return (idx == len/2)?result:new int[]{};
         
-        Arrays.sort(changed);
-        for(int curr: changed){
-            
-            if(curr == 0)
-                continue;
-            int count = map.get(curr);
-            if(count > 0){
-                
-                int double_value_count = map.getOrDefault(curr*2,0);
-                if(double_value_count > 0){
-                    result[idx] = curr;
-                    idx++;
-                    map.put(curr*2,double_value_count-1);
-                    map.put(curr,count-1);
-                }
-            }
-            }
-        
-        return (idx == len/2)?result:new int[]{} ;
     }
 }

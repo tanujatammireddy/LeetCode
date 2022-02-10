@@ -3,48 +3,51 @@ class Solution {
         
         int row = grid.length;
         int col = grid[0].length;
+        
+        if(k== 0) return row+col-2;
+        if(k == row+col-2) return -1;
+        
         boolean[][][] visited = new boolean[row][col][k+1];
         int[][] directions = {{0,1},{1,0},{0,-1},{-1,0}};
-        int steps = 0;
         Queue<int[]> queue = new LinkedList();
         queue.add(new int[]{0,0,0});
-        visited[0][0][0]= true;
+        visited[0][0][0] = true;
+        int steps= 0;
+        
+        
         
         while(!queue.isEmpty()){
             
             int size = queue.size();
             
             for(int i=0;i< size;i++){
-                
                 int[] current = queue.poll();
                 int x = current[0];
                 int y = current[1];
                 int obs = current[2];
-                
-                if(x == row-1 && y== col-1){
-                    return steps;
+            
+                if(x == row-1 && y == col-1){
+                return steps;
                 }
-                
                 for(int[] dir:directions){
                     
                     int X = x + dir[0];
                     int Y = y + dir[1];
+                    int new_obs = obs + grid[x][y];
                     
-                    if(X>=0 && X< row && Y>=0 && Y< col){
-                        
-                        int obs_new = obs + grid[X][Y];
-                        if(obs_new > k) continue;
-                        if(!visited[X][Y][obs_new]){
-                            queue.add(new int[]{X,Y,obs_new});
-                            visited[X][Y][obs_new]= true;
-                        }
+                    if(X >=0 && X < row && Y >= 0 && Y < col && new_obs <= k && !visited[X][Y][new_obs]){
+                        visited[X][Y][new_obs] = true;
+                        queue.add(new int[]{X,Y,new_obs});
                     }
+                    
                 }
-            } 
-            steps++;
+            }
+           steps++; 
+                
         }
         
         return -1;
+        
         
     }
 }

@@ -5,7 +5,6 @@ class Solution {
         int col = grid[0].length;
         
         if(k== 0) return row+col-2;
-        if(k == row+col-2) return -1;
         
         boolean[][][] visited = new boolean[row][col][k+1];
         int[][] directions = {{0,1},{1,0},{0,-1},{-1,0}};

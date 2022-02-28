@@ -10,7 +10,6 @@ class Solution {
             
             while(negativeIndex < positiveIndex){
                 
-                //System.out.println("negativeIndex:"+negativeIndex+"  positiveIndex:"+positiveIndex);
                 if(nums[positiveIndex] > Math.abs(nums[negativeIndex]) ){
                     result[idx] = nums[positiveIndex]* nums[positiveIndex];
                     positiveIndex--;
@@ -23,7 +22,6 @@ class Solution {
             }
             if(negativeIndex == positiveIndex)
                 result[idx] = nums[negativeIndex]* nums[negativeIndex];
-            //System.out.println("negativeIndex:"+negativeIndex+"  positiveIndex:"+positiveIndex);
             
             return result;
        

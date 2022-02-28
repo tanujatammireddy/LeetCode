@@ -4,8 +4,7 @@ class Solution {
         int len = nums.length;
         if(k == len)
             return;
-        if(k > len)
-            k = k%len;
+        k = k%len;
         len--;
         reverse(0,len,nums);
         reverse(0,k-1,nums);

@@ -7,17 +7,12 @@ class Solution {
         int idx = 0;
         
         while(idx < s.length()){
-            
             char c = s.charAt(idx);
-            if(c == '('){
-                stack.push(0);
-            }   
-            else{
-                stack.push(Math.max(2*stack.pop(),1)+stack.pop());
-                
-            }   
-            idx++;
-            
+            if(c == '(')
+                stack.push(0);  
+            else
+                stack.push(Math.max(2*stack.pop(),1)+stack.pop());  
+            idx++; 
         }
         
         return stack.pop();

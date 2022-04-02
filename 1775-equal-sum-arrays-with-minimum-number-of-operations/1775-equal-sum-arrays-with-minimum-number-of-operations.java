@@ -36,7 +36,7 @@ class Solution {
         //**Parsing the lowest sum array from starting to add points and Height sum array from the end to remove the points**//
         int operations_count = 0;
         
-        while((max_pointer >= 0 || min_pointer < nums2.length) && sum1 != sum2){
+        while((max_pointer >= 0 || min_pointer < nums2.length) && sum1 > sum2){
             
             
             int diff = sum1 - sum2;

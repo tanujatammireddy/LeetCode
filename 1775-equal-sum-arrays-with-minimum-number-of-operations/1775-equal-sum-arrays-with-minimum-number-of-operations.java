@@ -1,7 +1,7 @@
 class Solution {
     public int minOperations(int[] nums1, int[] nums2) {
         
-        int result = -1;
+        int result = 0;
         int sum1 = 0;
         
         for(int num:nums1)
@@ -18,8 +18,6 @@ class Solution {
             result = helper(nums1, nums2, sum1, sum2);
         else if(sum1 < sum2)
             result = helper(nums2, nums1, sum2, sum1);
-        else
-            return 0;  
         
         return result;
         

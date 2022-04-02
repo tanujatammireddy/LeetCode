@@ -78,7 +78,7 @@ class Solution {
         }
         
         //verify if the idle condition is met
-        return (sum1 - sum2 <= 0 )?operations_count:-1;
+        return (sum1 - sum2 == 0 )?operations_count:-1;
         
     }
 }

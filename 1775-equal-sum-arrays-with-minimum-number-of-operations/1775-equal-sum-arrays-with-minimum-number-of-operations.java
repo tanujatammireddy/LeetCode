@@ -27,15 +27,6 @@ class Solution {
     
     public int helper(int[] nums1, int[] nums2, int sum1, int sum2){
         
-        /*
-        System.out.println(Arrays.toString(nums1));
-        System.out.println(Arrays.toString(nums2));
-        System.out.println(sum1);
-        System.out.println(sum2);
-        */
-        boolean max_pointer_move = false;
-        boolean min_pointer_move = false;
-        
         int max_pointer = nums1.length -1;
         int min_pointer = 0;
         

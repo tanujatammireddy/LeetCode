@@ -10,13 +10,16 @@ class Solution {
         for(int num:nums2)
             sum2 += num;
         
+        if(sum1 == sum2 )
+            return 0;
+        
         Arrays.sort(nums1);
         Arrays.sort(nums2);
         
         /* Passing the array with heighest sum as Array1*/
         if(sum1 > sum2)
             result = helper(nums1, nums2, sum1, sum2);
-        else if(sum1 < sum2)
+        else 
             result = helper(nums2, nums1, sum2, sum1);
         
         return result;

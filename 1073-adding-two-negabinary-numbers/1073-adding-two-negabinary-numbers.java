@@ -42,11 +42,12 @@ class Solution {
         if(carry == -1)
             result.add(1);
         
+        // Removing leading zeros
         int idx = result.size()-1;
         while(idx > 0 && result.get(idx) == 0)
             idx--;
-        //System.out.println(idx);
         
+        // reversing the list and adding the result to an array
         int len = idx+1;
         int[] negaBinary = new int[len];
         for(int i=0; i<len; i++){

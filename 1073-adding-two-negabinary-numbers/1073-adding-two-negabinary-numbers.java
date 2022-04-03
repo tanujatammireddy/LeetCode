@@ -42,7 +42,6 @@ class Solution {
         if(carry == -1)
             result.add(1);
         
-        System.out.println(result.toString());
         int idx = result.size()-1;
         while(idx > 0 && result.get(idx) == 0)
             idx--;

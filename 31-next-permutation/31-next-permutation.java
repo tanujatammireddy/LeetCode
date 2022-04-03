@@ -1,37 +1,47 @@
 class Solution {
     public void nextPermutation(int[] nums) {
-        //boolean flag = false;
         
-        if(nums.length > 1){
-            int i = nums.length-1;
-            while(i-1 >= 0 && nums[i-1] >= nums[i])
-                i--;
-            int decreasingPoint = i-1;  
-            if(decreasingPoint>=0){
-                int j = nums.length-1;
-                while (j>=0 && nums[j] <= nums[decreasingPoint]) 
-                j--;
-                if(j>=0)
-                swap(nums,decreasingPoint,j);
+        if(nums.length == 1)
+            return;
+        if(nums.length == 2){
+            swap(nums,0,1);
+            return;
+        }
+        int pointer = nums.length-2;
+        
+        while(pointer >= 0 && nums[pointer] >= nums[pointer+1]){
+            pointer--;
+        }
+        if(pointer >=0 ){
+            
+            int idx = nums.length-1;
+            while(nums[idx] <= nums[pointer]){
+                idx--;
             }
-            reverse(nums,i);
-            
-            
+            swap(nums,pointer,idx);
         }
-    }
-    public void swap(int[]nums, int i, int j){
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
+        reverse(nums,pointer+1);
         
-    }
-    public void reverse(int[]nums, int i){
-        int start = i, end = nums.length-1;
-        while(start< end){
-            swap(nums, start, end);
-            start++;
-            end--;
-        }
+        
     }
     
+    public void swap(int[] nums, int pos1, int pos2){
+        int temp = nums[pos1];
+        nums[pos1] = nums[pos2];
+        nums[pos2] = temp;
+        
+    }
+    
+    public void reverse(int[] nums, int start){
+        
+        int i= start;
+        int j= nums.length-1;
+        
+        while(i< j){
+            swap(nums,i,j);
+            i++;
+            j--;
+        }
+        
+    }
 }

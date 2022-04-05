@@ -40,7 +40,6 @@ class Solution {
     }
     @Override
     public int compareTo(node other){
-        
         return (a+b)-(other.a+other.b); 
     }
     }

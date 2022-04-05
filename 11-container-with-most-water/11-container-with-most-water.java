@@ -6,8 +6,7 @@ class Solution {
         int maxArea = 0;
         while(start < end){
             
-            int area = Math.min(height[start],height[end]) *(end-start);
-            maxArea = Math.max(area, maxArea);
+            maxArea = Math.max(Math.min(height[start],height[end]) *(end-start), maxArea);
             
             if(height[start] < height[end])
                 start++;

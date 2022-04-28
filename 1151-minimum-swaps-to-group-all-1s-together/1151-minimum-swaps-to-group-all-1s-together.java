@@ -3,10 +3,8 @@ public int minSwaps(int[] data) {
 
     int len = data.length;
     int totalOnes = 0;
-    for(int num:data){
-        if(num == 1)
-            totalOnes++;
-        }
+    for(int num:data)
+        totalOnes += num;
 
     if(totalOnes == 1) return 0;
 

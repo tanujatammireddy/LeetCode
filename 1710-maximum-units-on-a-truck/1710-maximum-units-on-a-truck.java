@@ -11,7 +11,8 @@ class Solution {
             truckSize = truckSize-numberOfBoxes;
             int units = numberOfBoxes*boxType[1];
             maxUnits += units;
-                
+            
+            if(truckSize ==0) break;   
         }
             
         

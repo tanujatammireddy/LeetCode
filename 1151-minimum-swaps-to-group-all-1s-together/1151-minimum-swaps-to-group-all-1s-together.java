@@ -10,8 +10,7 @@ class Solution {
                     totalOnes++;
             }
             
-            if(totalOnes == 1)
-                return 0;
+            if(totalOnes == 1) return 0;
         
             int left = 0;
             int right = 0;

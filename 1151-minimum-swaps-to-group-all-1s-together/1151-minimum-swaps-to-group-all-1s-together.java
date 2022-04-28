@@ -23,10 +23,9 @@ class Solution {
                     zerosCount++;
                 right++;  
             }
-            if(zerosCount == 0 )
-                return 0;
+            
             minZeros = Math.min(minZeros,zerosCount); 
-            //System.out.println(""+zerosCount);
+            System.out.println(""+zerosCount);
             while(right < len){
                
                 if(data[left] == 0){

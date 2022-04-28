@@ -24,7 +24,7 @@ class Solution {
             }
             
             minZeros = Math.min(minZeros,zerosCount); 
-            System.out.println(""+zerosCount);
+            //System.out.println(""+zerosCount);
             while(right < len){
                
                 if(data[left] == 0){

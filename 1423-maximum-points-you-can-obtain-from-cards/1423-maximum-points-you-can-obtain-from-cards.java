@@ -17,7 +17,7 @@ class Solution {
              
             right_sum += cardPoints[len-i];
             left_sum -= cardPoints[j--];
-           // System.out.println("left_sum"+left_sum+" right_sum"+right_sum + " total"+(right_sum+left_sum));
+          
             score = Math.max(score,(left_sum+right_sum));
             
         }

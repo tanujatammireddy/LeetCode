@@ -5,6 +5,7 @@ class Solution {
         
         result = new ArrayList();
         tar = target;
+        Arrays.sort(candidates);
         helper(candidates,0,0,new ArrayList());
         return result;
     }

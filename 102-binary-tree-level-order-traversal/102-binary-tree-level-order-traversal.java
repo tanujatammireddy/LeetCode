@@ -23,7 +23,6 @@ class Solution {
             Queue<TreeNode> queue = new LinkedList();
             queue.add(root);
             
-            int idx = 0;
             while(!queue.isEmpty()){
                 
                 int size = queue.size();
@@ -41,10 +40,7 @@ class Solution {
                         if(current.right != null)
                             queue.add(current.right);
                 }
-                    idx++;
                 }
-                
-                
             }
             
         }

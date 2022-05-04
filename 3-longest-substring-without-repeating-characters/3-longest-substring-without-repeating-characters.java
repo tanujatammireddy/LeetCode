@@ -1,33 +1,28 @@
 class Solution {
-    public int lengthOfLongestSubstring(String s) {
+   public int lengthOfLongestSubstring(String s) {
         
-        int[] map = new int[128];
-        int left = 0;
-        int right = 0;
         int len = s.length();
         if(len <= 1)
             return len;
-        int max = Integer.MIN_VALUE;
         
-        while( left < len){
+        int left =0;
+        int right = 0;
+        int[] arr = new int[128];
+        int maxLength = 0;
+        
+        while(right < len){
             
-            while(left < len && map[s.charAt(left)] == 0){
-                map[s.charAt(left)]++;
+            arr[s.charAt(right)]++;
+            while(arr[s.charAt(right)] >1 )
+            {
+                arr[s.charAt(left)]--;
                 left++;
             }
-            
-            while(right < left){
-                int right_count = map[s.charAt(right)]--;
-                right++;
-                if(right_count == 1)
-                    break;
-            }
-            
-            //System.out.print("left "+left+" right "+right);
-            
-            max = Math.max(max, left-right+1);
+            right++;
+            maxLength = Math.max(maxLength,(right-left));
         }
-        return max;
+        
+        return maxLength;
         
     }
 }

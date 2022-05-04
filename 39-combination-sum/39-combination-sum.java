@@ -19,6 +19,8 @@ class Solution {
         else
         {
             for(int i= pos;i< candidates.length;i++){
+                if(candidates[i] > tar)
+                    continue;
                 list.add(candidates[i]);
                 helper(candidates,i,sum+candidates[i],list);
                 list.remove(list.size()-1);

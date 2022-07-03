@@ -3,7 +3,6 @@ class Solution {
         
         
         if(isEqual(p1,p2)|| isEqual(p1,p3) || isEqual(p1,p4) || isEqual(p2,p3) ||isEqual(p2,p4) || isEqual(p3,p4))
-            
             return false;
         
         Set<Integer> set = new HashSet();

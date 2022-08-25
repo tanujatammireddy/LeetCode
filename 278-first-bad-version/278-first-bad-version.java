@@ -9,7 +9,6 @@ public class Solution extends VersionControl {
         
         while(low < high){ 
             int mid = low + ((high -low)/2);
-            //System.out.println("low"+ low +" high"+high+" mid"+mid);
             if(!isBadVersion(mid)){
                 low = mid+1;
             }

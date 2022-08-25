@@ -7,16 +7,14 @@ public class Solution extends VersionControl {
         int low = 1;
         int high = n;
         
-        while(low < high){
-            
-            if(low == high)
-                return low;
-            int mid = low + (high-low)/2;
-            if(isBadVersion(mid))
-                high = mid;
-            else
+        while(low < high){ 
+            int mid = low + ((high -low)/2);
+            //System.out.println("low"+ low +" high"+high+" mid"+mid);
+            if(!isBadVersion(mid)){
                 low = mid+1;
-            
+            }
+            else
+                high = mid;
         }
         
         return low;
